@@ -12,6 +12,8 @@
   },
   "author": "Ethan Harstad",
   "dependencies": {
-    "serialport": "~1.1.3"
+    "serialport": "~1.1.3",
+    "socket.io": "~0.9.16",
+    "express": "~3.3.8"
   }
 }
