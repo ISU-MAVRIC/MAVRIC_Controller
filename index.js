@@ -11,6 +11,15 @@ app.use(express.static(__dirname + '/client'));
 io.sockets.on('connection', function(socket) {
 	socket.on('control', function(data) {
 		console.log(data);
+		var buf = new Uint8Array(4);
+		var speed = Math.round(data.speed) + 127;
+		var turn = Math.round(data.turn) + 127;
+		buf[0] = 's';
+		buf[1] = speed;
+		buf[2] = 't';
+		buf[3] = turn;
+		//console.log(buf);
+		serialPort.write(buf);
 	});
 });
 

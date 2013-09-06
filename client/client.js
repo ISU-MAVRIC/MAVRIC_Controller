@@ -23,6 +23,13 @@ function update(timestamp) {
 	if(keyArray[65]) controlStatus.turn = -maxTurn;
 	if(keyArray[68]) controlStatus.turn = maxTurn;
 	if(!keyArray[65] && !keyArray[68]) controlStatus.turn = 0;
+	if(navigator.webkitGetGamepads()[1]) {
+		var controller = navigator.webkitGetGamepads()[1];
+		controlStatus.speed = maxSpeed * -controller.axes[1];
+		controlStatus.turn = maxTurn * controller.axes[0];
+		if(Math.abs(controller.axes[0]) < 0.15) controlStatus.turn = 0;
+		if(Math.abs(controller.axes[1]) < 0.15) controlStatus.speed = 0;
+	}
 	socket.emit('control', controlStatus);
 	requestAnimationFrame(update);
 }
