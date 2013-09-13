@@ -10,20 +10,20 @@ app.use(express.static(__dirname + '/client'));
 
 io.sockets.on('connection', function(socket) {
 	socket.on('control', function(data) {
-		console.log(data);
+		//console.log(data);
 		var buf = new Uint8Array(4);
 		var speed = Math.round(data.speed) + 127;
 		var turn = Math.round(data.turn) + 127;
-		buf[0] = 's';
+		buf[0] = 'T'.charCodeAt(0);
 		buf[1] = speed;
-		buf[2] = 't';
+		buf[2] = 'P'.charCodeAt(0);
 		buf[3] = turn;
-		//console.log(buf);
+		console.log(buf);
 		serialPort.write(buf);
 	});
 });
 
-var serialPort = new SerialPort('/dev/ttyUSB0', {
+var serialPort = new SerialPort('COM27', {
 	baudrate: 9600,
 	databits: 8,
 	stopbits: 1,
