@@ -7,6 +7,20 @@ var controlStatus = {
 	turn: 0
 };
 
+
+// Setup the map
+var map = L.map('map').setView([42.03,-93.62], 13);
+L.tileLayer('http://{s}.tile.stamen.com/terrain/{z}/{x}/{y}.jpg', {
+	attribution: 'Tiles courtesy of <a href="http://www.stamen.com">Stamen</a>'
+}).addTo(map);
+handleResize();
+$(window).resize(handleResize);
+
+function handleResize() {
+	var mapContainer = $('#map');
+	mapContainer.height(0.75 * mapContainer.width());
+}
+
 // Setup requestAnimationFrame
 (function() {
 	// Find proper method with fallbacks
@@ -23,8 +37,8 @@ function update(timestamp) {
 	if(keyArray[65]) controlStatus.turn = -maxTurn;
 	if(keyArray[68]) controlStatus.turn = maxTurn;
 	if(!keyArray[65] && !keyArray[68]) controlStatus.turn = 0;
-	if(navigator.webkitGetGamepads()[0]) {
-		var controller = navigator.webkitGetGamepads()[0];
+	var controller = getGamepads();
+	if(controller) {
 		controlStatus.speed = maxSpeed * controller.axes[1];
 		controlStatus.turn = maxTurn * -controller.axes[0];
 		if(Math.abs(controller.axes[0]) < 0.15) controlStatus.turn = 0;
@@ -32,6 +46,14 @@ function update(timestamp) {
 	}
 	socket.emit('control', controlStatus);
 	//requestAnimationFrame(update);
+}
+
+function getGamepads() {
+	var gamepads = navigator.webkitGetGamepads();
+	for(var i = 0; i < gamepads.length; i++) {
+		if(typeof gamepads[i] !== 'undefined') return gamepads[i];
+	}
+	return;
 }
 
 //requestAnimationFrame(update);

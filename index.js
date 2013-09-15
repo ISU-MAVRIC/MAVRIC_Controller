@@ -8,6 +8,11 @@ server.listen(8000);
 
 app.use(express.static(__dirname + '/client'));
 
+app.get('/stream.mp4', function(req, res) {
+	res.set('content-type', 'video/mp4');
+	res.send(200);
+});
+
 io.sockets.on('connection', function(socket) {
 	socket.on('control', function(data) {
 		//console.log(data);
@@ -18,7 +23,7 @@ io.sockets.on('connection', function(socket) {
 		buf[1] = speed;
 		buf[2] = 'P'.charCodeAt(0);
 		buf[3] = turn;
-		console.log(buf);
+		//console.log(buf);
 		serialPort.write(buf);
 	});
 });
