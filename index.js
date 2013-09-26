@@ -15,16 +15,7 @@ app.get('/stream.mp4', function(req, res) {
 
 io.sockets.on('connection', function(socket) {
 	socket.on('control', function(data) {
-		//console.log(data);
-		var buf = new Uint8Array(4);
-		var speed = Math.round(data.speed) + 127;
-		var turn = Math.round(data.turn) + 127;
-		buf[0] = 'T'.charCodeAt(0);
-		buf[1] = speed;
-		buf[2] = 'P'.charCodeAt(0);
-		buf[3] = turn;
-		//console.log(buf);
-		serialPort.write(buf);
+		console.log(data);
 	});
 });
 
