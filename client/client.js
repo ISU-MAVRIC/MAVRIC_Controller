@@ -55,6 +55,13 @@ L.tileLayer('http://{s}.tile.stamen.com/terrain/{z}/{x}/{y}.jpg', {
 handleResize();
 $(window).resize(handleResize);
 
+jwplayer("player").setup({
+	'file': 'http://127.0.0.1:8080/stream.flv',
+	'debug': {
+		'levels': 'all'
+	}
+});
+
 var roverSvg = d3.select('#rover').append('svg')
 			.style('background-color', 'gray')
 			.style('height', '300px');

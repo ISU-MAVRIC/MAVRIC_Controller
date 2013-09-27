@@ -2,15 +2,14 @@
 <head>
 	<title>MAVRIC Client - Test</title>
 	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" href="lib/flowplayer/skin/minimalist.css" />
 	<link rel="stylesheet" type="text/css" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
 	<link rel="stylesheet" type="text/css" href="client.css" />
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
-	<script type="text/javascript" src="lib/flowplayer/flowplayer.min.js"></script>
 	<script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.3.3/d3.min.js"></script>
+	<script type="text/javascript" src="lib/jwplayer.js"></script>
 </head>
 <body>
 <div class="container">
@@ -19,11 +18,7 @@
 		<div id="map"></div>
 	</div>
 	<div class="col-md-5">
-		<div class="flowplayer" data-swf="lib/flowplayer/flowplayer.swf" data-ratio="0.75">
-			<video autoplay>
-				<source type="video/mp4" src="//127.0.01.1:8080/stream.flv">
-			</video>
-		</div>
+		<div id="player">Loading the player</div>
 	</div>
 	<div class="col-md-2">
 		Pan
