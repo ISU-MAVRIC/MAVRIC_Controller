@@ -56,10 +56,13 @@ handleResize();
 $(window).resize(handleResize);
 
 jwplayer("player").setup({
-	'file': 'http://127.0.0.1:8080/stream.flv',
-	'debug': {
-		'levels': 'all'
-	}
+	file: 'http://127.0.0.1:8080/stream.flv',
+	autostart: true,
+	mute: true,
+	width: '100%',
+	aspectratio: '4:3',
+	controls: true,
+	buffertime: 0
 });
 
 var roverSvg = d3.select('#rover').append('svg')
