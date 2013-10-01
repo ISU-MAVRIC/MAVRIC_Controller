@@ -36,7 +36,7 @@ var turnExpo = 0.5;
 var camExpo = 1.0;
 var lowSpeed = 32;
 var highSpeed = 64;
-var turnSpeed = 16;
+var turnSpeed = 32;
 var camSpeed = 4;
 
 // Control input tracking
@@ -62,7 +62,7 @@ jwplayer("player").setup({
 	width: '100%',
 	aspectratio: '4:3',
 	controls: true,
-	buffertime: 0
+	bufferlength: 0
 });
 
 var roverSvg = d3.select('#rover').append('svg')
@@ -105,6 +105,7 @@ function update(timestamp) {
 		btnArray = controller.buttons;
 	}
 	socket.emit('control', controlStatus);
+	console.log(controlStatus.speed);
 	requestAnimationFrame(update);
 }
 
