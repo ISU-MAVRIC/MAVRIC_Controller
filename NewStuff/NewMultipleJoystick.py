@@ -7,6 +7,7 @@ print "====================================="
 
 import pygame.joystick
 import servo
+import DisplayOfAxis
 
 pygame.init()
 pygame.joystick.init()
@@ -62,6 +63,27 @@ while done == False:
         R_t_coord=int(round(Rt_axis_pos * 90, 0) + 90)
         R_z_coord=int(round(Rz_axis_pos * 90, 0) + 90)
 
+        #Progress Bar Coordinates
+        L_x_bar=int(round(Lx_axis_pos * 50, 0) + 50) 
+        L_y_bar=int(round(Ly_axis_pos * 50, 0) + 50)
+        L_t_bar=int(round(Lt_axis_pos * 50, 0) + 50)
+        L_z_bar=int(round(Lz_axis_pos * 50, 0) + 50)
+        #Coordinates of Left Joystick progress bars
+        DisplayOfAxis.move(0, L_x_bar)
+        DisplayOfAxis.move(1, L_y_bar)
+        DisplayOfAxis.move(3, L_z_bar)
+        DisplayOfAxis.move(2, L_t_bar)
+
+        R_x_bar=int(round(Rx_axis_pos * 50, 0) + 50)
+        R_y_bar=int(round(Ry_axis_pos * 50, 0) + 50)
+        R_t_bar=int(round(Rt_axis_pos * 50, 0) + 50)
+        R_z_bar=int(round(Rz_axis_pos * 50, 0) + 50)
+        #Coordinates of Right Joystick progress bars
+        DisplayOfAxis.move(4, R_x_bar)
+        DisplayOfAxis.move(5, R_y_bar)
+        DisplayOfAxis.move(7, R_z_bar)
+        DisplayOfAxis.move(6, R_t_bar)
+        
 #Servo Movements servo.move("servo", "angle")
         #Left joystick buttons
         
@@ -177,7 +199,11 @@ while done == False:
     servo.move(6, R_y_coord)
     servo.move(0, R_z_coord)
     servo.move(0, R_t_coord)
-
-            
-  
+'''
+    #Progress Bar Status
+    Prog.move(0, L_x_bar)
+    Prog.move(1, L_y_bar)
+    Prog.move(3, L_z_bar)
+    Prog.move(2, L_t_bar)
+'''  
 pygame.quit()
