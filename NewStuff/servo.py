@@ -6,9 +6,10 @@ Provides a serial connection
 ################################################
 
 import serial
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
 
-
-usbport = 'COM7'
+usbport = 'COM4'
 
 # Set up serial baud rate
 ser = serial.Serial(usbport, 9600, timeout=1)
@@ -21,4 +22,8 @@ def move(servo, angle):
         ser.write(chr(angle))
     else:
         print "Servo angle must be an integer between 0 and 255.\n"
+
+timer = QTimer()
+timer.timeout.connect(move)
+timer.start(20)
 
