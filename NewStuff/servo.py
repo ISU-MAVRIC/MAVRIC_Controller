@@ -9,7 +9,7 @@ import serial
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
-usbport = 'COM4'
+usbport = 'COM7'
 
 # Set up serial baud rate
 ser = serial.Serial(usbport, 9600, timeout=1)
