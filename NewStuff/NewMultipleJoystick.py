@@ -7,7 +7,7 @@ print "====================================="
 
 import pygame.joystick
 import servo
-#import DisplayOfAxis
+import DisplayOfAxis
 
 pygame.init()
 pygame.joystick.init()
@@ -139,7 +139,7 @@ while done == False:
             servo.move(99,180)
             print "Right Trigger Pressed"
         else:
-            servo.move(0,0)
+            servo.move(99,0)
         R_2_btn_pos = Rjoystick.get_button(1) #Right button 2
         if R_2_btn_pos == 1:
             servo.move(0,180)
@@ -179,6 +179,12 @@ while done == False:
 
         #Left Joystick Hat
         L_h_hat_pos = Ljoystick.get_hat(0)[0] #Left hat x direction
+        if L_h_hat_pos == -1:
+            servo.move(2,0)
+        elif L_h_hat_pos == 1:
+            servo.move(2, 180)
+        else:
+            servo.move(2,90)
         L_v_hat_pos = Ljoystick.get_hat(0)[1] #Left hat y direction
         
         #Right Joystick Hat
