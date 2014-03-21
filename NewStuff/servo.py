@@ -29,4 +29,4 @@ timer.start(20)
 '''
 timer = QTimer()
 timer.connect(timer,SIGNAL("timeout()"), move)
-timer.start(20)
+timer.start(200)
