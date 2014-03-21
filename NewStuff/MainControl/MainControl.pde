@@ -95,21 +95,27 @@ void loop()
       switch (servo) {
         case 1:   ///Left motor---Motor.setSpeed(pos) cases 1,3,5
           servo1.write(pos);    // move servo1 to 'pos'
+          delay(20);
           break;
         case 2:  ///Right motor---Motor.setSpeed(pos)cases 2,4,6
           servo2.write(pos);
+          delay(20);
           break;
         case 3:
           servo3.write(pos);
+          delay(20);
           break;
         case 4:
           servo4.write(pos);
+          delay(20);
           break;
         case 5:
           servo5.write(pos);
+          delay(20);
           break;
         case 6:
           servo6.write(pos);
+          delay(20);
           break;
    // TO ADD SERVOS:
    //     case 6:
@@ -129,6 +135,7 @@ void loop()
           input = map(rawInput, 102, 1023, 0, 1023);
           myPID.Compute();
           SR.motor((int) rawOutput);
+          break;
           
           
           
