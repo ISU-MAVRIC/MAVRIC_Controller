@@ -22,8 +22,11 @@ def move(servo, angle):
         ser.write(chr(angle))
     else:
         print "Servo angle must be an integer between 0 and 255.\n"
-
+'''
 timer = QTimer()
 timer.timeout.connect(move)
 timer.start(20)
-
+'''
+timer = QTimer()
+timer.connect(timer,SIGNAL("timeout()"), move)
+timer.start(20)

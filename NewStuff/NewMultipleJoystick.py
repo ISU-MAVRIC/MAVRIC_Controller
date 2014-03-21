@@ -59,7 +59,7 @@ while done == False:
         L_z_coord=int(round(Lz_axis_pos * 90, 0) + 90)
 
         R_x_coord=int(round(Rx_axis_pos * 90, 0) + 90)
-        R_y_coord=int(round(Ry_axis_pos * 127, 0) + 127)
+        R_y_coord=int(round(Ry_axis_pos * 127, 0) + 127) #Motor speeds from 0-127-255
         R_t_coord=int(round(Rt_axis_pos * 90, 0) + 90)
         R_z_coord=int(round(Rz_axis_pos * 90, 0) + 90)
 
@@ -180,11 +180,11 @@ while done == False:
         #Left Joystick Hat
         L_h_hat_pos = Ljoystick.get_hat(0)[0] #Left hat x direction
         if L_h_hat_pos == -1:
-            servo.move(2,0)
+            servo.move(99,180)
         elif L_h_hat_pos == 1:
-            servo.move(2, 180)
-        else:
-            servo.move(2,90)
+            servo.move(99, 180)
+        elif L_h_hat_pos == 0:
+            servo.move(99,0)
         L_v_hat_pos = Ljoystick.get_hat(0)[1] #Left hat y direction
         
         #Right Joystick Hat
@@ -197,8 +197,8 @@ while done == False:
     #Axes Moves
     servo.move(0, L_x_coord)
     servo.move(1, L_y_coord)#Speed of Left wheels
-    servo.move(2, L_y_coord)
     servo.move(3, L_y_coord)
+    servo.move(5, L_y_coord)
     servo.move(0, L_z_coord)
     servo.move(0, L_t_coord)
 
