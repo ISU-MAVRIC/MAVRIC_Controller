@@ -69,23 +69,23 @@ while done == False:
         L_t_bar=int(round(Lt_axis_pos * 50, 0) + 50)
         L_z_bar=int(round(Lz_axis_pos * 50, 0) + 50)
 
-        '''#Coordinates of Left Joystick progress bars
-        DisplayOfAxis.move(0, L_x_bar)
-        DisplayOfAxis.move(1, L_y_bar)
-        DisplayOfAxis.move(3, L_z_bar)
-        DisplayOfAxis.move(2, L_t_bar)
-        '''
         R_x_bar=int(round(Rx_axis_pos * 50, 0) + 50)
         R_y_bar=int(round(Ry_axis_pos * 50, 0) + 50)
         R_t_bar=int(round(Rt_axis_pos * 50, 0) + 50)
         R_z_bar=int(round(Rz_axis_pos * 50, 0) + 50)
 
-        '''#Coordinates of Right Joystick progress bars
+        #Coordinates of Left Joystick progress bars
+        DisplayOfAxis.move(0, L_x_bar)
+        DisplayOfAxis.move(1, L_y_bar)
+        DisplayOfAxis.move(3, L_z_bar)
+        DisplayOfAxis.move(2, L_t_bar)
+        
+        #Coordinates of Right Joystick progress bars
         DisplayOfAxis.move(4, R_x_bar)
         DisplayOfAxis.move(5, R_y_bar)
         DisplayOfAxis.move(7, R_z_bar)
         DisplayOfAxis.move(6, R_t_bar)
-        '''
+        
 #Servo Movements servo.move("servo", "angle")
         #Left joystick buttons
         
@@ -191,7 +191,8 @@ while done == False:
         R_h_hat_pos = Rjoystick.get_hat(0)[0] #Right hat x direction
         R_v_hat_pos = Rjoystick.get_hat(0)[1] #Right hat y direction
         
-        
+#from DisplayOfAxis import Progress
+#progress = Progress()
 
     #Axes Moves
     servo.move(0, L_x_coord)

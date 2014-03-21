@@ -11,6 +11,24 @@ MAVRIC GUI
 import sys
 from PyQt4 import QtGui, QtCore
 
+def move(Prog, Status):
+    if Prog == 0:
+        move0 = Status
+    elif Prog == 1:
+        move1 = Status
+    elif Prog == 2:
+        move2 = Status
+    elif Prog == 3:
+        move3 = Status
+    elif Prog == 4:
+        move4 = Status
+    elif Prog == 5:
+        move5 = Status
+    elif Prog == 6:
+        move6 = Status
+    elif Prog == 7:
+        move7 = Status
+
 class Progress(QtGui.QWidget):
 
     def __init__(self):
@@ -54,30 +72,28 @@ class Progress(QtGui.QWidget):
         self.pbar4.setGeometry(350, 40, 200, 25)
         self.lbl4 = QtGui.QLabel('X axis', self)
         self.lbl4.move(300, 40)
-        #self.pbar4.setValue(move0)
+        #self.pbar4.setValue(move4)
         
         #Y axis
         self.pbar5 = QtGui.QProgressBar(self)
         self.pbar5.setGeometry(350, 80, 200, 25)
         self.lbl5 = QtGui.QLabel('Y axis', self)
         self.lbl5.move(300, 80)   
-        #self.pbar5.setValue(move1)
+        #self.pbar5.setValue(move5)
 
         #Z axis
         self.pbar7 = QtGui.QProgressBar(self)
         self.pbar7.setGeometry(350, 120, 200, 25)
         self.lbl7 = QtGui.QLabel('Z axis', self)
         self.lbl7.move(300, 120)
-        #self.pbar7.setValue(move3)
+        #self.pbar7.setValue(move7)
 
         #Throttle
         self.pbar6 = QtGui.QProgressBar(self)
         self.pbar6.setGeometry(350, 160, 200, 25)
         self.lbl6 = QtGui.QLabel('Throttle', self)
         self.lbl6.move(300, 160)
-        #self.pbar6.setValue(move2)
-
-    
+        #self.pbar6.setValue(move6)  
         
         self.timer = QtCore.QBasicTimer()
         self.step = 0
@@ -86,17 +102,7 @@ class Progress(QtGui.QWidget):
         self.setWindowTitle('MAVRIC Axis Display')
         self.show()
         self.timer.start(100, self)
-'''
-def move(Prog, Status):
-    if Prog == 0:
-        move0 = Status
-    elif Prog == 1:
-        move1 = Status
-    elif Prog == 2:
-        move2 = Status
-    elif Prog == 3:
-        move3 = Status
-'''            
+           
 def main():
 
     app = QtGui.QApplication(sys.argv)
