@@ -12,9 +12,11 @@ import sys
 from PyQt4 import QtGui, QtCore
 
 def move(Prog, Status):
+    move0 = 50
     if Prog == 0:
-        global move0
-        move0 = Status
+        #global move0
+        move0 = 50
+        #move0 = Status
     elif Prog == 1:
         global move1
         move1 = Status
@@ -51,7 +53,7 @@ class Progress(QtGui.QWidget):
         self.pbar.setGeometry(50, 40, 200, 25)
         self.lbl = QtGui.QLabel('X axis', self)
         self.lbl.move(10, 40)
-        #self.pbar.setValue(move0)
+        self.pbar.setValue(move.move0)
         
         #Y axis
         self.pbar1 = QtGui.QProgressBar(self)
