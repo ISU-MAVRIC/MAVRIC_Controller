@@ -13,7 +13,7 @@ double rawInput, output;
 //Input range 102-1023
 PID myPID(&input, &rawOutput, &setPoint,1.2,0,0, DIRECT);
 
-String dataString;
+//String dataString;
 
 SyRenSimplified SR(Serial2);
 
@@ -67,7 +67,7 @@ void setup()
   Serial2.begin(9600);
   //initialize the variables we're linked to
   rawInput = analogRead(0);
-  setPoint = 500;
+  setPoint = 300;
   
   //turn the PID on
   myPID.SetOutputLimits(-127,127);
