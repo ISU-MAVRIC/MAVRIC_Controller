@@ -180,11 +180,11 @@ while done == False:
         #Left Joystick Hat
         L_h_hat_pos = Ljoystick.get_hat(0)[0] #Left hat x direction
         if L_h_hat_pos == -1:
-            servo.move(99,180)
+            servo.move(50,180)
         elif L_h_hat_pos == 1:
-            servo.move(99, 180)
+            servo.move(50, 90)
         elif L_h_hat_pos == 0:
-            servo.move(99,0)
+            servo.move(0,0)
         L_v_hat_pos = Ljoystick.get_hat(0)[1] #Left hat y direction
         
         #Right Joystick Hat
@@ -196,7 +196,7 @@ while done == False:
 
     #Axes Moves
     servo.move(0, L_x_coord)
-    servo.move(1, L_y_coord)#Speed of Left wheels
+    servo.move(0, L_y_coord)
     servo.move(3, L_y_coord)
     servo.move(5, L_y_coord)
     servo.move(0, L_z_coord)
