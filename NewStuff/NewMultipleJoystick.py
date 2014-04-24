@@ -11,7 +11,7 @@ import DisplayOfAxis
 
 pygame.init()
 pygame.joystick.init()
-pygame.display.init() 
+ 
 
 done = False
 joy = []
@@ -91,7 +91,7 @@ while done == False:
         
         L_T_btn_pos = Ljoystick.get_button(0) #Left trigger
         if L_T_btn_pos == 1:
-            servo.move(0,180)
+            servo.move(99,180)
             print "Left Trigger Pressed"
         else:
             servo.move(0,0)
@@ -103,13 +103,13 @@ while done == False:
             servo.move(0,0)
         L_3_btn_pos = Ljoystick.get_button(2) #Left button 3
         if L_3_btn_pos == 1:
-            servo.move(50,180)
+            servo.move(0,90)
             print "Left Button 3 Pressed"
         else:
             servo.move(0,0)
         L_4_btn_pos = Ljoystick.get_button(3) #Left button 4
         if L_4_btn_pos == 1:
-            servo.move(50,90)
+            servo.move(0,180)
             print "Left Button 4 Pressed"
         else:
             servo.move(0,0)
@@ -180,9 +180,9 @@ while done == False:
         #Left Joystick Hat
         L_h_hat_pos = Ljoystick.get_hat(0)[0] #Left hat x direction
         if L_h_hat_pos == -1:
-            servo.move(50,180)
+            servo.move(1,90)
         elif L_h_hat_pos == 1:
-            servo.move(50, 90)
+            servo.move(1, 180)
         elif L_h_hat_pos == 0:
             servo.move(0,0)
         L_v_hat_pos = Ljoystick.get_hat(0)[1] #Left hat y direction
@@ -208,5 +208,5 @@ while done == False:
     servo.move(6, R_y_coord)
     servo.move(0, R_z_coord)
     servo.move(0, R_t_coord)
-  
+ 
 pygame.quit()
