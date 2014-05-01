@@ -184,7 +184,7 @@ while done == False:
         elif L_h_hat_pos == 1:
             servo.move(1, 180)
         elif L_h_hat_pos == 0:
-            servo.move(1,0)
+            servo.move(0,0)
         L_v_hat_pos = Ljoystick.get_hat(0)[1] #Left hat y direction
         if L_v_hat_pos == -1:
             servo.move(4,90)
