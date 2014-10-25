@@ -10,7 +10,7 @@ def main():
 
     clock = pygame.time.Clock()
 
-    ser = serial.Serial('COM4', 57600); #Virtual Serial Port for now
+    ser = serial.Serial('COM3', 57600); #Virtual Serial Port for now
 
     #print joystick info
     # joystick_count = pygame.joystick.get_count()
@@ -27,7 +27,7 @@ def main():
     joystick.init()
 
     while True:
-        clock.tick(10)
+        clock.tick(100)
         pygame.event.pump()
         joyX = -joystick.get_axis(0)
         joyY = -joystick.get_axis(1)
