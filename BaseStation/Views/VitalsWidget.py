@@ -14,6 +14,11 @@ class VitalsWidget(QtGui.QDockWidget):
         layout = QtGui.QVBoxLayout()
 
         layout.addWidget(QtGui.QLabel("Voltage:", frame))
+        self.voltage_display = QtGui.QLCDNumber(frame)
+        self.voltage_display.setDigitCount(4)
+        self.voltage_display.setSegmentStyle(QtGui.QLCDNumber.SegmentStyle.Flat)
+        self.voltage_display.display(12.4)
+        layout.addWidget(self.voltage_display)
         self.voltage_bar = QtGui.QProgressBar(frame)
         self.voltage_bar.setTextVisible(True)
         layout.addWidget(self.voltage_bar)
