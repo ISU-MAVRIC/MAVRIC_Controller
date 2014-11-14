@@ -1,7 +1,8 @@
 from PySide import QtCore, QtGui
 
-from OverviewTab import *
 from ConsoleWidget import *
+from InputDialog import *
+from OverviewTab import *
 from VitalsWidget import *
 
 class ApplicationWindow(QtGui.QMainWindow):
@@ -27,7 +28,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         exit_action.triggered.connect(self.close)
         file_menu.addAction(exit_action)
         option_menu = menubar.addMenu('&Options')
-        serial_action = QtGui.QAction('&Setup Port', self)
+        serial_action = QtGui.QAction('Setup &Port', self)
         serial_action.setStatusTip('Configure the communications port')
         serial_action.triggered.connect(self.configure_port)
         option_menu.addAction(serial_action)
@@ -36,6 +37,11 @@ class ApplicationWindow(QtGui.QMainWindow):
         connect_action.setStatusTip('Connect to the communications port')
         connect_action.triggered.connect(self.connect_port)
         option_menu.addAction(connect_action)
+        option_menu.addSeparator()
+        input_action = QtGui.QAction('Setup &Input', self)
+        input_action.setStatusTip('Configure the input devices')
+        input_action.triggered.connect(self.configure_input)
+        option_menu.addAction(input_action)
 
         self.tab_widget = QtGui.QTabWidget(self)
         self.overview_tab = OverviewTab()
@@ -65,3 +71,8 @@ class ApplicationWindow(QtGui.QMainWindow):
 
     def connect_port(self):
         pass
+
+    def configure_input(self):
+        dialog = InputDialog(self)
+        if dialog.exec_() == QtGui.QDialog.DialogCode.Accepted:
+            print dialog.get_primary()
