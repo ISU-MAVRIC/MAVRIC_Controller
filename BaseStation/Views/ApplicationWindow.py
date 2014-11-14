@@ -77,5 +77,4 @@ class ApplicationWindow(QtGui.QMainWindow):
 
     def configure_input(self):
         dialog = InputDialog(self)
-        if dialog.exec_() == QtGui.QDialog.DialogCode.Accepted:
-            pass # notify input manager
+        dialog.exec_()

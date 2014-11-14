@@ -52,7 +52,11 @@ class InputDialog(QtGui.QDialog):
 
     def ok_action(self):
         primary_index = self.primary_list.currentIndex() - 1
-        if primary_index >= 0:
-            self.settings.setValue('input/primary/index', primary_index)
+        if primary_index < 0:
+            primary_index = None
+
+        self.settings.setValue('input/primary/index', primary_index)
+
+        QtGui.QApplication.instance().input_controller.configure_input()
 
         self.accept()
