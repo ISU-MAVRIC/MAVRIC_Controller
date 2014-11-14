@@ -1,3 +1,5 @@
+import math
+
 from pygame import event, joystick
 from PySide import QtCore
 
@@ -15,6 +17,10 @@ class InputController(QtCore.QObject):
         self.configure_input()
 
     def configure_input(self):
+        if joystick.get_count() == 0:
+            print "No controls detected!"
+            return
+
         primary_index = self.settings.value('input/primary/index')
         if primary_index is not None:
             self.primary = joystick.Joystick(primary_index)
@@ -26,9 +32,15 @@ class InputController(QtCore.QObject):
     def update(self):
         event.pump()
         if self.primary is not None:
-            print "{0} {1} {2} {3}".format(
-                self.primary.get_axis(0),
-                self.primary.get_axis(1),
-                self.primary.get_axis(2),
-                self.primary.get_axis(3),
+            print "{0:+0.4f} {1:+0.4f} {2:+0.4f} {3:+0.4f}".format(
+                self.expo(self.primary.get_axis(0), 1.5),
+                self.expo(self.primary.get_axis(1), 1.5),
+                self.expo(self.primary.get_axis(2), 1.0),
+                self.expo(self.primary.get_axis(3), 1.5)
             )
+
+    @staticmethod
+    def expo(raw, expo):
+        uraw = abs(raw)
+        out = math.pow(uraw, expo)
+        return math.copysign(uraw, raw)
