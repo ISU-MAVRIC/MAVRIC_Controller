@@ -1,13 +1,15 @@
 from pygame import joystick
-from PySide import QtGui
+from PySide import QtCore, QtGui
 
 class InputDialog(QtGui.QDialog):
 
     def __init__(self, parent):
         super(InputDialog, self).__init__(parent)
         self.setWindowTitle('Configure input devices')
+
+        self.settings = QtCore.QSettings()
+
         self.initUI()
-        self.primary = None
 
     def initUI(self):
         joysticks = self.get_joystick_list()
@@ -19,6 +21,10 @@ class InputDialog(QtGui.QDialog):
         layout.addLayout(form)
         self.primary_list = QtGui.QComboBox(self)
         self.primary_list.addItems(joysticks)
+        if self.settings.value('primary_joystick_index') is not None:
+            self.primary_list.setCurrentIndex(
+                self.settings.value('primary_joystick_index') + 1
+            )
         form.addRow("Primary Input:", self.primary_list)
 
         buttons = QtGui.QHBoxLayout()
@@ -36,7 +42,7 @@ class InputDialog(QtGui.QDialog):
 
     def get_joystick_list(self):
         joystick.init()
-        joysticks = []
+        joysticks = ['None']
         for i in range(joystick.get_count()):
             stick = joystick.Joystick(i)
             joysticks.append(
@@ -46,8 +52,8 @@ class InputDialog(QtGui.QDialog):
         return joysticks
 
     def ok_action(self):
-        self.primary = self.primary_list.currentIndex()
-        self.accept()
+        primary_index = self.primary_list.currentIndex() - 1
+        if primary_index >= 0:
+            self.settings.setValue('primary_joystick_index', primary_index)
 
-    def get_primary(self):
-        return self.primary
+        self.accept()

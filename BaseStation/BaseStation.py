@@ -1,10 +1,16 @@
 import sys
+
 import pygame
-from PySide import QtGui
+from PySide import QtCore, QtGui
+
 from Views.ApplicationWindow import *
 
 def main():
     app = QtGui.QApplication(sys.argv)
+
+    QtCore.QCoreApplication.setOrganizationName('MAVRIC')
+    QtCore.QCoreApplication.setApplicationName('Base Station')
+    settings = QtCore.QSettings()
     app.setStyle('plastique')
 
     pygame.init()
