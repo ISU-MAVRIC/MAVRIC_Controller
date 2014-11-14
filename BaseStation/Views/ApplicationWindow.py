@@ -3,6 +3,7 @@ from PySide import QtCore, QtGui
 from ConsoleWidget import *
 from InputDialog import *
 from OverviewTab import *
+from PortDialog import *
 from VitalsWidget import *
 
 class ApplicationWindow(QtGui.QMainWindow):
@@ -67,7 +68,9 @@ class ApplicationWindow(QtGui.QMainWindow):
         )
 
     def configure_port(self):
-        pass
+        dialog = PortDialog(self)
+        if dialog.exec_() == QtGui.QDialog.DialogCode.Accepted:
+            pass # notify port manager
 
     def connect_port(self):
         pass

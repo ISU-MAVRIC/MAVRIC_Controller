@@ -21,9 +21,10 @@ class InputDialog(QtGui.QDialog):
         layout.addLayout(form)
         self.primary_list = QtGui.QComboBox(self)
         self.primary_list.addItems(joysticks)
-        if self.settings.value('primary_joystick_index') is not None:
+        primary_index = self.settings.value('input/primary/index')
+        if primary_index is not None:
             self.primary_list.setCurrentIndex(
-                self.settings.value('primary_joystick_index') + 1
+                primary_index + 1
             )
         form.addRow("Primary Input:", self.primary_list)
 
@@ -37,8 +38,6 @@ class InputDialog(QtGui.QDialog):
         ok_button.setDefault(True)
         ok_button.clicked.connect(self.ok_action)
         buttons.addWidget(ok_button)
-
-        self.get_joystick_list()
 
     def get_joystick_list(self):
         joystick.init()
@@ -54,6 +53,6 @@ class InputDialog(QtGui.QDialog):
     def ok_action(self):
         primary_index = self.primary_list.currentIndex() - 1
         if primary_index >= 0:
-            self.settings.setValue('primary_joystick_index', primary_index)
+            self.settings.setValue('input/primary/index', primary_index)
 
         self.accept()
