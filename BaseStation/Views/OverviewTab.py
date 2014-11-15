@@ -1,6 +1,7 @@
 from PySide import QtCore, QtGui
 
 from ArmFrame import *
+from CameraFrame import *
 from PropulsionFrame import *
 
 class OverviewTab(QtGui.QWidget):
@@ -18,8 +19,15 @@ class OverviewTab(QtGui.QWidget):
         info_layout = QtGui.QHBoxLayout()
         info_frame.setLayout(info_layout)
 
+        left_layout = QtGui.QVBoxLayout()
+
+        camera_frame = CameraFrame(info_frame)
+        left_layout.addWidget(camera_frame)
+
         propulsion_frame = PropulsionFrame(info_frame)
-        info_layout.addWidget(propulsion_frame)
+        left_layout.addWidget(propulsion_frame)
+
+        info_layout.addLayout(left_layout)
 
         arm_frame = ArmFrame(info_frame)
         info_layout.addWidget(arm_frame)
