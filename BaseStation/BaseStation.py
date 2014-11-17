@@ -21,7 +21,7 @@ def main():
 
     # Setup application objects
     app.command_controller = CommandController(app)
-    app.input_controller = InputController(app)
+    app.input_controller = InputController(app.command_controller, app)
     app.port_controller = PortController(app.command_controller, app)
 
     # Create main window

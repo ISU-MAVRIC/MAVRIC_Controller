@@ -34,6 +34,12 @@ class PortController(QtCore.QObject):
         self.port.port = port_name
         self.port.baudrate = port_baud
 
+    def write(self, data):
+        if self.port.isOpen() == False:
+            return False
+
+        self.port.write(data)
+
     def update(self):
         while self.port.inWaiting() > 0:
             byte = self.port.read()

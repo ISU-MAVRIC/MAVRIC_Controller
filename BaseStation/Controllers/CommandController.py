@@ -2,13 +2,33 @@ import sys
 
 from PySide import QtCore
 
+from DriveController import *
+
 class CommandController(QtCore.QObject):
 
     def __init__(self, parent=None):
         super(CommandController, self).__init__(parent)
 
+        self.drive_control = DriveController(self)
+
         self.state = "none"
         self.buffer = bytearray()
+
+    def drive_command(self, left, right):
+        drive, angle = self.drive_control.compute(left, right)
+
+        print "<cm {0:03d} {1:03d} {2:03d} {3:03d} {4:03d} {5:03d} >".format(
+            drive[0], drive[1], drive[2], drive[3], drive[4], drive[5]
+        )
+        print "<cs {0:03d} {1:03d} {2:03d} {3:03d} {4:03d} {5:03d} >".format(
+            angle[0], angle[1], angle[2], angle[3], angle[4], angle[5]
+        )
+
+        drive_cmd = "<cm{:s}{:s}{:s}{:s}{:s}{:s}>\n".format(
+            chr(drive[0]), chr(drive[1]), chr(drive[2]),
+            chr(drive[3]), chr(drive[4]), chr(drive[5])
+        )
+        self.parent().port_controller.write(drive_cmd)
 
     def parse(self, byte):
         if self.state == "none":

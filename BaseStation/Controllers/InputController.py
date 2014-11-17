@@ -5,8 +5,9 @@ from PySide import QtCore
 
 class InputController(QtCore.QObject):
 
-    def __init__(self, parent):
+    def __init__(self, controller, parent):
         super(InputController, self).__init__(parent)
+        self.controller = controller
 
         self.settings = QtCore.QSettings()
         self.primary = None
@@ -68,7 +69,7 @@ class InputController(QtCore.QObject):
         right_out = self.expo(right_raw, self.right_drive['expo'])
         if self.right_drive['reverse']: right_out = -1.0 * right_out
 
-        print "Drive: {:0.4f} {:0.4f}".format(left_out, right_out)
+        self.controller.drive_command(left_out, right_out)
 
     @staticmethod
     def expo(raw, expo):
