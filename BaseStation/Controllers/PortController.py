@@ -12,7 +12,7 @@ class PortController(QtCore.QObject):
         self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self.update)
 
-        self.configure_port()
+        self.configure()
 
     def connect(self):
         self.port.open()
@@ -26,7 +26,7 @@ class PortController(QtCore.QObject):
         self.timer.stop()
         self.port.close()
 
-    def configure_port(self):
+    def configure(self):
         port_name = self.settings.value("comm/port")
         port_baud = self.settings.value("comm/baud")
 

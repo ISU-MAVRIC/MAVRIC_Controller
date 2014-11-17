@@ -14,9 +14,9 @@ class InputController(QtCore.QObject):
         self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self.update)
 
-        self.configure_input()
+        self.configure()
 
-    def configure_input(self):
+    def configure(self):
         if joystick.get_count() == 0:
             print "No controls detected!"
             return

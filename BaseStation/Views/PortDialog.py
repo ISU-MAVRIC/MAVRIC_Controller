@@ -50,6 +50,6 @@ class PortDialog(QtGui.QDialog):
         baud_rate = int(self.baud_list.currentText())
         self.settings.setValue('comm/baud', baud_rate)
 
-        QtGui.QApplication.instance().port_controller.configure_port()
+        QtGui.QApplication.instance().port_controller.configure()
 
         self.accept()

@@ -57,6 +57,6 @@ class InputDialog(QtGui.QDialog):
 
         self.settings.setValue('input/primary/index', primary_index)
 
-        QtGui.QApplication.instance().input_controller.configure_input()
+        QtGui.QApplication.instance().input_controller.configure()
 
         self.accept()
