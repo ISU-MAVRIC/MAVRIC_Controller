@@ -33,11 +33,11 @@ class ApplicationWindow(QtGui.QMainWindow):
         serial_action.setStatusTip('Configure the communications port')
         serial_action.triggered.connect(self.configure_port)
         option_menu.addAction(serial_action)
-        connect_action = QtGui.QAction('&Connect Port', self)
-        connect_action.setCheckable(True)
-        connect_action.setStatusTip('Connect to the communications port')
-        connect_action.triggered.connect(self.connect_port)
-        option_menu.addAction(connect_action)
+        self.connect_action = QtGui.QAction('&Connect Port', self)
+        self.connect_action.setCheckable(True)
+        self.connect_action.setStatusTip('Connect to the communications port')
+        self.connect_action.toggled.connect(self.connect_port)
+        option_menu.addAction(self.connect_action)
         option_menu.addSeparator()
         input_action = QtGui.QAction('Setup &Input', self)
         input_action.setStatusTip('Configure the input devices')
@@ -69,11 +69,14 @@ class ApplicationWindow(QtGui.QMainWindow):
 
     def configure_port(self):
         dialog = PortDialog(self)
-        if dialog.exec_() == QtGui.QDialog.DialogCode.Accepted:
-            pass # notify port manager
+        dialog.exec_()
 
-    def connect_port(self):
-        pass
+    def connect_port(self, state):
+        if state == True:
+            if QtGui.QApplication.instance().port_controller.connect() == False:
+                self.connect_action.setChecked(False)
+        else:
+            QtGui.QApplication.instance().port_controller.disconnect()
 
     def configure_input(self):
         dialog = InputDialog(self)

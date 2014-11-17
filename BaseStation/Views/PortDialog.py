@@ -46,8 +46,10 @@ class PortDialog(QtGui.QDialog):
     def ok_action(self):
         port_name = self.port_field.text()
         self.settings.setValue('comm/port', port_name)
-        
+
         baud_rate = int(self.baud_list.currentText())
         self.settings.setValue('comm/baud', baud_rate)
+
+        QtGui.QApplication.instance().port_controller.configure_port()
 
         self.accept()

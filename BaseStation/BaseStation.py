@@ -4,6 +4,7 @@ import pygame
 from PySide import QtCore, QtGui
 
 from Controllers.InputController import *
+from Controllers.PortController import *
 from Views.ApplicationWindow import *
 
 def main():
@@ -19,6 +20,7 @@ def main():
 
     # Setup application objects
     app.input_controller = InputController(app)
+    app.port_controller = PortController(app)
 
     # Create main window
     window = ApplicationWindow()
