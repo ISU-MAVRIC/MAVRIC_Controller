@@ -3,8 +3,9 @@ from serial import Serial
 
 class PortController(QtCore.QObject):
 
-    def __init__(self, parent=None):
+    def __init__(self, controller, parent=None):
         super(PortController, self).__init__(parent)
+        self.controller = controller
 
         self.settings = QtCore.QSettings()
         self.port = Serial()
@@ -35,4 +36,5 @@ class PortController(QtCore.QObject):
 
     def update(self):
         while self.port.inWaiting() > 0:
-            print self.port.read()
+            byte = self.port.read()
+            self.controller.parse(byte)

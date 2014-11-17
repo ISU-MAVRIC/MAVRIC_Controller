@@ -3,6 +3,7 @@ import sys
 import pygame
 from PySide import QtCore, QtGui
 
+from Controllers.CommandController import *
 from Controllers.InputController import *
 from Controllers.PortController import *
 from Views.ApplicationWindow import *
@@ -19,8 +20,9 @@ def main():
     app.setStyle('plastique')
 
     # Setup application objects
+    app.command_controller = CommandController(app)
     app.input_controller = InputController(app)
-    app.port_controller = PortController(app)
+    app.port_controller = PortController(app.command_controller, app)
 
     # Create main window
     window = ApplicationWindow()
