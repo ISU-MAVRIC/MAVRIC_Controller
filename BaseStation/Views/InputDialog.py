@@ -54,11 +54,17 @@ class InputDialog(QtGui.QDialog):
         layout.addLayout(map_layout)
         map_layout.addWidget(QtGui.QLabel('Controller:', self), 0, 1)
         map_layout.addWidget(QtGui.QLabel('Axis:', self), 0, 2)
+        map_layout.addWidget(QtGui.QLabel('Expo:', self), 0, 3)
+        map_layout.addWidget(QtGui.QLabel('Reverse:', self), 0, 4)
 
         left_control_index = self.settings.value('input/map/left_drive/control')
         left_axis_index = self.settings.value('input/map/left_drive/axis')
+        left_expo = self.settings.value('input/map/left_drive/expo')
+        left_reverse = self.settings.value('input/map/left_drive/reverse') == 'true'
         right_control_index = self.settings.value('input/map/right_drive/control')
         right_axis_index = self.settings.value('input/map/right_drive/axis')
+        right_expo = self.settings.value('input/map/right_drive/expo')
+        right_reverse = self.settings.value('input/map/right_drive/reverse') == 'true'
 
         map_layout.addWidget(QtGui.QLabel('Left Drive:', self), 1, 0,
             QtCore.Qt.AlignmentFlag.AlignRight)
@@ -72,6 +78,14 @@ class InputDialog(QtGui.QDialog):
         if left_axis_index is not None:
             self.left_axis.setCurrentIndex(left_axis_index)
         map_layout.addWidget(self.left_axis, 1, 2)
+        self.left_expo = QtGui.QLineEdit(self)
+        if left_expo is not None:
+            self.left_expo.setText(str(left_expo))
+        map_layout.addWidget(self.left_expo, 1, 3)
+        self.left_reverse = QtGui.QCheckBox(self)
+        if left_reverse is not None:
+            self.left_reverse.setChecked(left_reverse)
+        map_layout.addWidget(self.left_reverse, 1, 4)
 
         map_layout.addWidget(QtGui.QLabel('Right Drive:', self), 2, 0,
             QtCore.Qt.AlignmentFlag.AlignRight)
@@ -85,6 +99,14 @@ class InputDialog(QtGui.QDialog):
         if right_axis_index is not None:
             self.right_axis.setCurrentIndex(right_axis_index)
         map_layout.addWidget(self.right_axis, 2, 2)
+        self.right_expo = QtGui.QLineEdit(self)
+        if right_expo is not None:
+            self.right_expo.setText(str(right_expo))
+        map_layout.addWidget(self.right_expo, 2, 3)
+        self.right_reverse = QtGui.QCheckBox(self)
+        if right_reverse is not None:
+            self.right_reverse.setChecked(right_reverse)
+        map_layout.addWidget(self.right_reverse, 2, 4)
 
         buttons = QtGui.QHBoxLayout()
         buttons.addStretch(1)
@@ -123,11 +145,19 @@ class InputDialog(QtGui.QDialog):
         self.settings.setValue('input/map/left_drive/control', left_control_index)
         left_axis_index = self.left_axis.currentIndex()
         self.settings.setValue('input/map/left_drive/axis', left_axis_index)
+        left_expo = float(self.left_expo.text())
+        self.settings.setValue('input/map/left_drive/expo', left_expo)
+        left_reverse = self.left_reverse.isChecked()
+        self.settings.setValue('input/map/left_drive/reverse', left_reverse)
 
         right_control_index = self.right_control.currentIndex()
         self.settings.setValue('input/map/right_drive/control', right_control_index)
         right_axis_index = self.right_axis.currentIndex()
         self.settings.setValue('input/map/right_drive/axis', right_axis_index)
+        right_expo = float(self.right_expo.text())
+        self.settings.setValue('input/map/right_drive/expo', right_expo)
+        right_reverse = self.right_reverse.isChecked()
+        self.settings.setValue('input/map/right_drive/reverse', right_reverse)
 
         QtGui.QApplication.instance().input_controller.configure()
 
