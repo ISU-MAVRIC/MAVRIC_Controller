@@ -2,86 +2,118 @@ from pygame import joystick
 from PySide import QtCore, QtGui
 
 class InputDialog(QtGui.QDialog):
+    """A dialog to configure input settings and devices."""
 
+    # List of controller names
     controllers = ['Primary', 'Secondary']
+    # List of axes
     axes = ['0', '1', '2', '3', '4', '5', '6', '7']
 
     def __init__(self, parent):
+        """Create and initialize an InputDialog.
+
+        Args:
+            parent (QWidget): Parent Qt widget.
+        """
         super(InputDialog, self).__init__(parent)
         self.setWindowTitle('Configure input devices')
 
+        # Get an instance of the settings object
         self.settings = QtCore.QSettings()
 
-        self.initUI()
+        # Setup the UI
+        self._initUI()
 
-    def initUI(self):
+    def _initUI(self):
+        """ A private method to setup the UI."""
+        # Get a list of connected joysticks
         joysticks = self.get_joystick_list()
 
+        # Main layout
         layout = QtGui.QVBoxLayout()
         self.setLayout(layout)
 
+        # Form layout for input devices
         form = QtGui.QFormLayout()
         layout.addLayout(form)
 
+        # Primary controller selection
         self.primary_list = QtGui.QComboBox(self)
         self.primary_list.addItems(joysticks)
         self.primary_list.setCurrentIndex(0)
+        # Attempt to get saved value
         primary_index = self.settings.value('input/primary/index')
         if primary_index is not None:
+            # Ensure the controller exists
             if primary_index < (len(joysticks) - 1):
+                # Set the controller
                 self.primary_list.setCurrentIndex(
                     primary_index + 1
                 )
         form.addRow("Primary Input:", self.primary_list)
 
+        # Secondary controller selection
         self.secondary_list = QtGui.QComboBox(self)
         self.secondary_list.addItems(joysticks)
         self.secondary_list.setCurrentIndex(0)
+        # Attempt to get saved value
         secondary_index = self.settings.value('input/secondary/index')
         if secondary_index is not None:
+            # Ensure the controller exists
             if secondary_index < (len(joysticks) - 1):
+                # Set the controller
                 self.secondary_list.setCurrentIndex(
                     secondary_index + 1
                 )
         form.addRow("Secondary Input:", self.secondary_list)
 
+        # Create a divider
         divider = QtGui.QFrame(self)
         divider.setFrameShape(QtGui.QFrame.Shape.HLine)
         divider.setFrameShadow(QtGui.QFrame.Shadow.Sunken)
         layout.addWidget(divider)
 
+        # Control map layout
         map_layout = QtGui.QGridLayout()
         layout.addLayout(map_layout)
+
+        # Control map headings
         map_layout.addWidget(QtGui.QLabel('Controller:', self), 0, 1)
         map_layout.addWidget(QtGui.QLabel('Axis:', self), 0, 2)
         map_layout.addWidget(QtGui.QLabel('Expo:', self), 0, 3)
         map_layout.addWidget(QtGui.QLabel('Reverse:', self), 0, 4)
 
+        # Get saved left_drive settings
         left_control_index = self.settings.value('input/map/left_drive/control')
         left_axis_index = self.settings.value('input/map/left_drive/axis')
         left_expo = self.settings.value('input/map/left_drive/expo')
         left_reverse = self.settings.value('input/map/left_drive/reverse') == 'true'
 
+        # Get saved right_drive settings
         right_control_index = self.settings.value('input/map/right_drive/control')
         right_axis_index = self.settings.value('input/map/right_drive/axis')
         right_expo = self.settings.value('input/map/right_drive/expo')
         right_reverse = self.settings.value('input/map/right_drive/reverse') == 'true'
 
+        # Get saved arm_azimuth settings
         azimuth_control_index = self.settings.value('input/map/arm_azimuth/control')
         azimuth_axis_index = self.settings.value('input/map/arm_azimuth/axis')
         azimuth_expo = self.settings.value('input/map/arm_azimuth/expo')
         azimuth_reverse = self.settings.value('input/map/arm_azimuth/reverse') == 'true'
 
+        # Get saved arm_shoulder settings
         shoulder_control_index = self.settings.value('input/map/arm_shoulder/control')
         shoulder_axis_index = self.settings.value('input/map/arm_shoulder/axis')
         shoulder_expo = self.settings.value('input/map/arm_shoulder/expo')
         shoulder_reverse = self.settings.value('input/map/arm_shoulder/reverse') == 'true'
 
+        # Get saved arm_elbow settings
         elbow_control_index = self.settings.value('input/map/arm_elbow/control')
         elbow_axis_index = self.settings.value('input/map/arm_elbow/axis')
         elbow_expo = self.settings.value('input/map/arm_elbow/expo')
         elbow_reverse = self.settings.value('input/map/arm_elbow/reverse') == 'true'
 
+        # left_drive setting widgets
         map_layout.addWidget(QtGui.QLabel('Left Drive:', self), 1, 0,
             QtCore.Qt.AlignmentFlag.AlignRight)
         self.left_control = QtGui.QComboBox(self)
@@ -103,6 +135,7 @@ class InputDialog(QtGui.QDialog):
             self.left_reverse.setChecked(left_reverse)
         map_layout.addWidget(self.left_reverse, 1, 4)
 
+        # right_drive setting widgets
         map_layout.addWidget(QtGui.QLabel('Right Drive:', self), 2, 0,
             QtCore.Qt.AlignmentFlag.AlignRight)
         self.right_control = QtGui.QComboBox(self)
@@ -124,6 +157,7 @@ class InputDialog(QtGui.QDialog):
             self.right_reverse.setChecked(right_reverse)
         map_layout.addWidget(self.right_reverse, 2, 4)
 
+        # arm_azimuth setting widgets
         map_layout.addWidget(QtGui.QLabel('Arm Azimuth:', self), 3, 0,
             QtCore.Qt.AlignmentFlag.AlignRight)
         self.azimuth_control = QtGui.QComboBox(self)
@@ -145,6 +179,7 @@ class InputDialog(QtGui.QDialog):
             self.azimuth_reverse.setChecked(azimuth_reverse)
         map_layout.addWidget(self.azimuth_reverse, 3, 4)
 
+        # arm_shoulder setting widgets
         map_layout.addWidget(QtGui.QLabel('Arm Shoulder:', self), 4, 0,
             QtCore.Qt.AlignmentFlag.AlignRight)
         self.shoulder_control = QtGui.QComboBox(self)
@@ -166,6 +201,7 @@ class InputDialog(QtGui.QDialog):
             self.shoulder_reverse.setChecked(shoulder_reverse)
         map_layout.addWidget(self.shoulder_reverse, 4, 4)
 
+        # arm_elbow setting widgets
         map_layout.addWidget(QtGui.QLabel('Arm Elbow:', self), 5, 0,
             QtCore.Qt.AlignmentFlag.AlignRight)
         self.elbow_control = QtGui.QComboBox(self)
@@ -187,6 +223,7 @@ class InputDialog(QtGui.QDialog):
             self.elbow_reverse.setChecked(elbow_reverse)
         map_layout.addWidget(self.elbow_reverse, 5, 4)
 
+        # Ok/cancel buttons
         buttons = QtGui.QHBoxLayout()
         buttons.addStretch(1)
         layout.addLayout(buttons)
@@ -199,6 +236,11 @@ class InputDialog(QtGui.QDialog):
         buttons.addWidget(ok_button)
 
     def get_joystick_list(self):
+        """Get a list of connected joysticks.
+
+        Returns:
+            List of strings describing connected joysticks.
+        """
         joystick.init()
         joysticks = ['None']
         for i in range(joystick.get_count()):
@@ -210,16 +252,20 @@ class InputDialog(QtGui.QDialog):
         return joysticks
 
     def ok_action(self):
+        """Action handler for ok button."""
+        # Save the primary controller index
         primary_index = self.primary_list.currentIndex() - 1
         if primary_index < 0:
             primary_index = None
         self.settings.setValue('input/primary/index', primary_index)
 
+        # Save the secondary controller index
         secondary_index = self.secondary_list.currentIndex() - 1
         if secondary_index < 0:
             secondary_index = None
         self.settings.setValue('input/secondary/index', secondary_index)
 
+        # Save left_drive settings
         left_control_index = self.left_control.currentIndex()
         self.settings.setValue('input/map/left_drive/control', left_control_index)
         left_axis_index = self.left_axis.currentIndex()
@@ -229,6 +275,7 @@ class InputDialog(QtGui.QDialog):
         left_reverse = self.left_reverse.isChecked()
         self.settings.setValue('input/map/left_drive/reverse', left_reverse)
 
+        # Save right_drive settings
         right_control_index = self.right_control.currentIndex()
         self.settings.setValue('input/map/right_drive/control', right_control_index)
         right_axis_index = self.right_axis.currentIndex()
@@ -238,6 +285,7 @@ class InputDialog(QtGui.QDialog):
         right_reverse = self.right_reverse.isChecked()
         self.settings.setValue('input/map/right_drive/reverse', right_reverse)
 
+        # Save arm_azimuth settings
         azimuth_control_index = self.azimuth_control.currentIndex()
         self.settings.setValue('input/map/arm_azimuth/control', azimuth_control_index)
         azimuth_axis_index = self.azimuth_axis.currentIndex()
@@ -247,6 +295,7 @@ class InputDialog(QtGui.QDialog):
         azimuth_reverse = self.azimuth_reverse.isChecked()
         self.settings.setValue('input/map/arm_azimuth/reverse', azimuth_reverse)
 
+        # Save arm_shoulder settings
         shoulder_control_index = self.shoulder_control.currentIndex()
         self.settings.setValue('input/map/arm_shoulder/control', shoulder_control_index)
         shoulder_axis_index = self.shoulder_axis.currentIndex()
@@ -256,6 +305,7 @@ class InputDialog(QtGui.QDialog):
         shoulder_reverse = self.shoulder_reverse.isChecked()
         self.settings.setValue('input/map/arm_shoulder/reverse', shoulder_reverse)
 
+        # Save arm_elbow settings
         elbow_control_index = self.elbow_control.currentIndex()
         self.settings.setValue('input/map/arm_elbow/control', elbow_control_index)
         elbow_axis_index = self.elbow_axis.currentIndex()
@@ -265,6 +315,8 @@ class InputDialog(QtGui.QDialog):
         elbow_reverse = self.elbow_reverse.isChecked()
         self.settings.setValue('input/map/arm_elbow/reverse', elbow_reverse)
 
+        # Notify the input controller
         QtGui.QApplication.instance().input_controller.configure()
 
+        # Cleanup the dialog
         self.accept()
