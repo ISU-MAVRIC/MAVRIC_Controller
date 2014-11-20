@@ -2,6 +2,7 @@ import sys
 
 from PySide import QtCore
 
+from ArmController import *
 from DriveController import *
 
 class CommandController(QtCore.QObject):
@@ -10,6 +11,7 @@ class CommandController(QtCore.QObject):
         super(CommandController, self).__init__(parent)
 
         self.drive_control = DriveController(self)
+        self.arm_control = ArmController(self)
 
         self.state = "none"
         self.buffer = bytearray()
@@ -29,6 +31,18 @@ class CommandController(QtCore.QObject):
             chr(drive[3]), chr(drive[4]), chr(drive[5])
         )
         self.parent().port_controller.write(drive_cmd)
+
+    def arm_speed_command(self, azimuth, shoulder, elevation):
+        a, s, e = self.arm_control.compute_speed(azimuth, shoulder, elevation)
+
+        print "<ca {:03d} {:03d} {:03d} >".format(
+            a, s, e
+        )
+
+        arm_cmd = "<cm{:s}{:s}{:s}>\n".format(
+            chr(a), chr(s), chr(e)
+        )
+        self.parent().port_controller.write(arm_cmd)
 
     def parse(self, byte):
         if self.state == "none":

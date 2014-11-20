@@ -50,6 +50,27 @@ class InputController(QtCore.QObject):
             'reverse': self.settings.value('input/map/right_drive/reverse') == 'true'
         }
 
+        self.arm_azimuth = {
+            'control': self.settings.value('input/map/arm_azimuth/control'),
+            'axis': self.settings.value('input/map/arm_azimuth/axis'),
+            'expo': float(self.settings.value('input/map/arm_azimuth/expo')),
+            'reverse': self.settings.value('input/map/arm_azimuth/reverse') == 'true'
+        }
+
+        self.arm_shoulder = {
+            'control': self.settings.value('input/map/arm_shoulder/control'),
+            'axis': self.settings.value('input/map/arm_shoulder/axis'),
+            'expo': float(self.settings.value('input/map/arm_shoulder/expo')),
+            'reverse': self.settings.value('input/map/arm_shoulder/reverse') == 'true'
+        }
+
+        self.arm_elbow = {
+            'control': self.settings.value('input/map/arm_elbow/control'),
+            'axis': self.settings.value('input/map/arm_elbow/axis'),
+            'expo': float(self.settings.value('input/map/arm_elbow/expo')),
+            'reverse': self.settings.value('input/map/arm_elbow/reverse') == 'true'
+        }
+
     def update(self):
         event.pump()
 
@@ -70,6 +91,32 @@ class InputController(QtCore.QObject):
         if self.right_drive['reverse']: right_out = -1.0 * right_out
 
         self.controller.drive_command(left_out, right_out)
+
+        if self.arm_azimuth['control'] == 0:
+            arm_azimuth_stick = self.primary
+        else:
+            arm_azimuth_stick = self.secondary
+        azimuth_raw = arm_azimuth_stick.get_axis(self.arm_azimuth['axis'])
+        azimuth_out = self.expo(azimuth_raw, self.arm_azimuth['expo'])
+        if self.arm_azimuth['reverse']: azimuth_out = -1.0 * azimuth_out
+
+        if self.arm_shoulder['control'] == 0:
+            arm_shoulder_stick = self.primary
+        else:
+            arm_shoulder_stick = self.secondary
+        shoulder_raw = arm_shoulder_stick.get_axis(self.arm_shoulder['axis'])
+        shoulder_out = self.expo(shoulder_raw, self.arm_shoulder['expo'])
+        if self.arm_shoulder['reverse']: shoulder_out = -1.0 * shoulder_out
+
+        if self.arm_elbow['control'] == 0:
+            arm_elbow_stick = self.primary
+        else:
+            arm_elbow_stick = self.secondary
+        elbow_raw = arm_elbow_stick.get_axis(self.arm_elbow['axis'])
+        elbow_out = self.expo(elbow_raw, self.arm_elbow['expo'])
+        if self.arm_elbow['reverse']: elbow_out = -1.0 * elbow_out
+
+        self.controller.arm_speed_command(azimuth_out, shoulder_out, elbow_out)
 
     @staticmethod
     def expo(raw, expo):

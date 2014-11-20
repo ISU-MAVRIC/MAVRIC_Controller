@@ -61,10 +61,26 @@ class InputDialog(QtGui.QDialog):
         left_axis_index = self.settings.value('input/map/left_drive/axis')
         left_expo = self.settings.value('input/map/left_drive/expo')
         left_reverse = self.settings.value('input/map/left_drive/reverse') == 'true'
+
         right_control_index = self.settings.value('input/map/right_drive/control')
         right_axis_index = self.settings.value('input/map/right_drive/axis')
         right_expo = self.settings.value('input/map/right_drive/expo')
         right_reverse = self.settings.value('input/map/right_drive/reverse') == 'true'
+
+        azimuth_control_index = self.settings.value('input/map/arm_azimuth/control')
+        azimuth_axis_index = self.settings.value('input/map/arm_azimuth/axis')
+        azimuth_expo = self.settings.value('input/map/arm_azimuth/expo')
+        azimuth_reverse = self.settings.value('input/map/arm_azimuth/reverse') == 'true'
+
+        shoulder_control_index = self.settings.value('input/map/arm_shoulder/control')
+        shoulder_axis_index = self.settings.value('input/map/arm_shoulder/axis')
+        shoulder_expo = self.settings.value('input/map/arm_shoulder/expo')
+        shoulder_reverse = self.settings.value('input/map/arm_shoulder/reverse') == 'true'
+
+        elbow_control_index = self.settings.value('input/map/arm_elbow/control')
+        elbow_axis_index = self.settings.value('input/map/arm_elbow/axis')
+        elbow_expo = self.settings.value('input/map/arm_elbow/expo')
+        elbow_reverse = self.settings.value('input/map/arm_elbow/reverse') == 'true'
 
         map_layout.addWidget(QtGui.QLabel('Left Drive:', self), 1, 0,
             QtCore.Qt.AlignmentFlag.AlignRight)
@@ -107,6 +123,69 @@ class InputDialog(QtGui.QDialog):
         if right_reverse is not None:
             self.right_reverse.setChecked(right_reverse)
         map_layout.addWidget(self.right_reverse, 2, 4)
+
+        map_layout.addWidget(QtGui.QLabel('Arm Azimuth:', self), 3, 0,
+            QtCore.Qt.AlignmentFlag.AlignRight)
+        self.azimuth_control = QtGui.QComboBox(self)
+        self.azimuth_control.addItems(self.controllers)
+        if azimuth_control_index is not None:
+            self.azimuth_control.setCurrentIndex(azimuth_control_index)
+        map_layout.addWidget(self.azimuth_control, 3, 1)
+        self.azimuth_axis = QtGui.QComboBox(self)
+        self.azimuth_axis.addItems(self.axes)
+        if azimuth_axis_index is not None:
+            self.azimuth_axis.setCurrentIndex(azimuth_axis_index)
+        map_layout.addWidget(self.azimuth_axis, 3, 2)
+        self.azimuth_expo = QtGui.QLineEdit(self)
+        if azimuth_expo is not None:
+            self.azimuth_expo.setText(str(azimuth_expo))
+        map_layout.addWidget(self.azimuth_expo, 3, 3)
+        self.azimuth_reverse = QtGui.QCheckBox(self)
+        if azimuth_reverse is not None:
+            self.azimuth_reverse.setChecked(azimuth_reverse)
+        map_layout.addWidget(self.azimuth_reverse, 3, 4)
+
+        map_layout.addWidget(QtGui.QLabel('Arm Shoulder:', self), 4, 0,
+            QtCore.Qt.AlignmentFlag.AlignRight)
+        self.shoulder_control = QtGui.QComboBox(self)
+        self.shoulder_control.addItems(self.controllers)
+        if shoulder_control_index is not None:
+            self.shoulder_control.setCurrentIndex(shoulder_control_index)
+        map_layout.addWidget(self.shoulder_control, 4, 1)
+        self.shoulder_axis = QtGui.QComboBox(self)
+        self.shoulder_axis.addItems(self.axes)
+        if shoulder_axis_index is not None:
+            self.shoulder_axis.setCurrentIndex(shoulder_axis_index)
+        map_layout.addWidget(self.shoulder_axis, 4, 2)
+        self.shoulder_expo = QtGui.QLineEdit(self)
+        if shoulder_expo is not None:
+            self.shoulder_expo.setText(str(shoulder_expo))
+        map_layout.addWidget(self.shoulder_expo, 4, 3)
+        self.shoulder_reverse = QtGui.QCheckBox(self)
+        if shoulder_reverse is not None:
+            self.shoulder_reverse.setChecked(shoulder_reverse)
+        map_layout.addWidget(self.shoulder_reverse, 4, 4)
+
+        map_layout.addWidget(QtGui.QLabel('Arm Elbow:', self), 5, 0,
+            QtCore.Qt.AlignmentFlag.AlignRight)
+        self.elbow_control = QtGui.QComboBox(self)
+        self.elbow_control.addItems(self.controllers)
+        if elbow_control_index is not None:
+            self.elbow_control.setCurrentIndex(elbow_control_index)
+        map_layout.addWidget(self.elbow_control, 5, 1)
+        self.elbow_axis = QtGui.QComboBox(self)
+        self.elbow_axis.addItems(self.axes)
+        if elbow_axis_index is not None:
+            self.elbow_axis.setCurrentIndex(elbow_axis_index)
+        map_layout.addWidget(self.elbow_axis, 5, 2)
+        self.elbow_expo = QtGui.QLineEdit(self)
+        if elbow_expo is not None:
+            self.elbow_expo.setText(str(elbow_expo))
+        map_layout.addWidget(self.elbow_expo, 5, 3)
+        self.elbow_reverse = QtGui.QCheckBox(self)
+        if elbow_reverse is not None:
+            self.elbow_reverse.setChecked(elbow_reverse)
+        map_layout.addWidget(self.elbow_reverse, 5, 4)
 
         buttons = QtGui.QHBoxLayout()
         buttons.addStretch(1)
@@ -158,6 +237,33 @@ class InputDialog(QtGui.QDialog):
         self.settings.setValue('input/map/right_drive/expo', right_expo)
         right_reverse = self.right_reverse.isChecked()
         self.settings.setValue('input/map/right_drive/reverse', right_reverse)
+
+        azimuth_control_index = self.azimuth_control.currentIndex()
+        self.settings.setValue('input/map/arm_azimuth/control', azimuth_control_index)
+        azimuth_axis_index = self.azimuth_axis.currentIndex()
+        self.settings.setValue('input/map/arm_azimuth/axis', azimuth_axis_index)
+        azimuth_expo = float(self.azimuth_expo.text())
+        self.settings.setValue('input/map/arm_azimuth/expo', azimuth_expo)
+        azimuth_reverse = self.azimuth_reverse.isChecked()
+        self.settings.setValue('input/map/arm_azimuth/reverse', azimuth_reverse)
+
+        shoulder_control_index = self.shoulder_control.currentIndex()
+        self.settings.setValue('input/map/arm_shoulder/control', shoulder_control_index)
+        shoulder_axis_index = self.shoulder_axis.currentIndex()
+        self.settings.setValue('input/map/arm_shoulder/axis', shoulder_axis_index)
+        shoulder_expo = float(self.shoulder_expo.text())
+        self.settings.setValue('input/map/arm_shoulder/expo', shoulder_expo)
+        shoulder_reverse = self.shoulder_reverse.isChecked()
+        self.settings.setValue('input/map/arm_shoulder/reverse', shoulder_reverse)
+
+        elbow_control_index = self.elbow_control.currentIndex()
+        self.settings.setValue('input/map/arm_elbow/control', elbow_control_index)
+        elbow_axis_index = self.elbow_axis.currentIndex()
+        self.settings.setValue('input/map/arm_elbow/axis', elbow_axis_index)
+        elbow_expo = float(self.elbow_expo.text())
+        self.settings.setValue('input/map/arm_elbow/expo', elbow_expo)
+        elbow_reverse = self.elbow_reverse.isChecked()
+        self.settings.setValue('input/map/arm_elbow/reverse', elbow_reverse)
 
         QtGui.QApplication.instance().input_controller.configure()
 
