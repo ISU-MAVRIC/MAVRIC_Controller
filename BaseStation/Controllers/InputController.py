@@ -4,8 +4,16 @@ from pygame import event, joystick
 from PySide import QtCore
 
 class InputController(QtCore.QObject):
+    """A class to interface with the joysticks."""
 
     def __init__(self, controller, parent):
+        """Construct and initialize a InputController.
+
+        Args:
+            controller (CommandController): CommandController instance for
+                encoding and decoding commands.
+            parent (QObject): Parent Qt object.
+        """
         super(InputController, self).__init__(parent)
         self.controller = controller
 
@@ -14,11 +22,12 @@ class InputController(QtCore.QObject):
         self.secondary = None
 
         self.timer = QtCore.QTimer(self)
-        self.timer.timeout.connect(self.update)
+        self.timer.timeout.connect(self._update)
 
         self.configure()
 
     def configure(self):
+        """Load the configuration from the application settings object."""
         if joystick.get_count() == 0:
             print "No controls detected!"
             return
@@ -71,7 +80,8 @@ class InputController(QtCore.QObject):
             'reverse': self.settings.value('input/map/arm_elbow/reverse') == 'true'
         }
 
-    def update(self):
+    def _update(self):
+        """Timer callback function."""
         event.pump()
 
         if self.left_drive['control'] == 0:
