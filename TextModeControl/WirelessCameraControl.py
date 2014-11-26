@@ -10,7 +10,7 @@ def main():
 
     clock = pygame.time.Clock()
 
-    ser = serial.Serial('COM4', 57600);
+    ser = serial.Serial('COM5', 57600);
 
     #print joystick info
     # joystick_count = pygame.joystick.get_count()
@@ -27,16 +27,16 @@ def main():
     joystick.init()
 
     while True:
-        clock.tick(100)
+        clock.tick(20)
         pygame.event.pump()
         joyX = -joystick.get_axis(1)
-        joyY = -joystick.get_axis(3)
+        joyY = -joystick.get_axis(2)
 
         # print(leftJoyValue)
         # print(rightJoyValue)
 
-        leftPower = int(mapRange(joyX, -1, 1, -90, 90))
-        rightPower = int(mapRange(joyY, -1, 1, -180, 180))
+        leftPower = int(mapRange(joyX, -1, 1, -2, 2))
+        rightPower = int(mapRange(joyY, -1, 1, -2, 2))
 
         packet = "<{:0=+4d} {:0=+4d}>".format(leftPower, rightPower)
 
