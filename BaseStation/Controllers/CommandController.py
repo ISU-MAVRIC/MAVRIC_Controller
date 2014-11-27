@@ -2,19 +2,33 @@ import sys
 
 from PySide import QtCore
 
+from ArmController import *
 from DriveController import *
 
 class CommandController(QtCore.QObject):
+    """A class to encode and decode commands."""
 
     def __init__(self, parent=None):
+        """Create and initialize a CommandController.
+
+        Args:
+            parent (QObject): Parent Qt object.
+        """
         super(CommandController, self).__init__(parent)
 
         self.drive_control = DriveController(self)
+        self.arm_control = ArmController(self)
 
         self.state = "none"
         self.buffer = bytearray()
 
     def drive_command(self, left, right):
+        """Send a propulsion command to the rover.
+
+        Args:
+            left (float): Float [-1,1] representing the speed of the left side.
+            right (float): Float [-1,1] representing the speed of the right side.
+        """
         drive, angle = self.drive_control.compute(left, right)
 
         print "<cm {0:03d} {1:03d} {2:03d} {3:03d} {4:03d} {5:03d} >".format(
@@ -30,7 +44,27 @@ class CommandController(QtCore.QObject):
         )
         self.parent().port_controller.write(drive_cmd)
 
+    def arm_speed_command(self, azimuth, shoulder, elevation):
+        """Send an arm speed command to the rover.
+
+        Args:
+            azimuth (float): Float [-1,1] representing the speed of the azimuth joint.
+            shoulder (float): Float [-1,1] representing the speed of the shoulder joint.
+            elevation (float): Float [-1,1] representing the speed of the elbow joint.
+        """
+        a, s, e = self.arm_control.compute_speed(azimuth, shoulder, elevation)
+
+        print "<ca {:03d} {:03d} {:03d} >".format(
+            a, s, e
+        )
+
+        arm_cmd = "<cm{:s}{:s}{:s}>\n".format(
+            chr(a), chr(s), chr(e)
+        )
+        self.parent().port_controller.write(arm_cmd)
+
     def parse(self, byte):
+        """Decode an incoming byte."""
         if self.state == "none":
             if byte == '<':
                 self.state = "started"

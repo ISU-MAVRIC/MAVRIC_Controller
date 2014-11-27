@@ -1,21 +1,32 @@
 from PySide import QtCore, QtGui
 
 class PropulsionFrame(QtGui.QGroupBox):
+    """A widget to display information about the propulsion system."""
 
     def __init__(self, parent):
+        """Create and initialize a PropulsionFrame.
+
+        Args:
+            parent (QWidget): Parent Qt widget.
+        """
         super(PropulsionFrame, self).__init__('Propulsion', parent)
 
-        self.initUI()
+        self._initUI()
 
-    def initUI(self):
+    def _initUI(self):
+        """A private method to initalize the UI."""
+        # Create main layout
         propulsion_layout = QtGui.QHBoxLayout()
         self.setLayout(propulsion_layout)
 
+        # Create space on left to center the widgets
+        propulsion_layout.addStretch(1)
+
+        # Create a grid layout to contain bar widgets
         propulsion_grid = QtGui.QGridLayout()
         propulsion_layout.addLayout(propulsion_grid)
 
-        propulsion_layout.addStretch(1)
-
+        # Left and right speed indicators
         self.left_speed_bar = QtGui.QProgressBar(self)
         self.left_speed_bar.setOrientation(QtCore.Qt.Vertical)
         self.left_speed_bar.setTextVisible(True)
@@ -30,6 +41,8 @@ class PropulsionFrame(QtGui.QGroupBox):
         self.right_speed_bar.setMaximum(255)
         self.right_speed_bar.setValue(128)
         propulsion_grid.addWidget(self.right_speed_bar, 0, 3, 3, 1)
+
+        # Wheel speed indicators
         self.m1_speed_bar = QtGui.QProgressBar(self)
         self.m1_speed_bar.setOrientation(QtCore.Qt.Vertical)
         self.m1_speed_bar.setTextVisible(True)
@@ -73,6 +86,7 @@ class PropulsionFrame(QtGui.QGroupBox):
         self.m6_speed_bar.setValue(128)
         propulsion_grid.addWidget(self.m6_speed_bar, 2, 4, 1, 1)
 
+        # Wheel steering indicators
         self.s1_dial = QtGui.QDial(self)
         self.s1_dial.setMinimum(-90)
         self.s1_dial.setMaximum(90)
@@ -94,4 +108,5 @@ class PropulsionFrame(QtGui.QGroupBox):
         self.s6_dial.setValue(0)
         propulsion_grid.addWidget(self.s6_dial, 2, 5, 1, 1)
 
+        # Create space on right to center the widgets
         propulsion_layout.addStretch(1)
