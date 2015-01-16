@@ -58,7 +58,7 @@ class CommandController(QtCore.QObject):
             a, s, e
         )
 
-        arm_cmd = "<cm{:s}{:s}{:s}>\n".format(
+        arm_cmd = "<ca{:s}{:s}{:s}>\n".format(
             chr(a), chr(s), chr(e)
         )
         self.parent().port_controller.write(arm_cmd)

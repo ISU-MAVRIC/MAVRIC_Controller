@@ -27,7 +27,7 @@ def main():
     joystick.init()
 
     while True:
-        clock.tick(100)
+        clock.tick(5)
         pygame.event.pump()
         joyX = -joystick.get_axis(0)
         joyY = -joystick.get_axis(1)
@@ -37,15 +37,15 @@ def main():
         # print(leftJoyValue)
         # print(rightJoyValue)
 
-        leftPower = int(mapRange(leftJoyValue, -2, 2, -127, 127))
-        rightPower = int(mapRange(rightJoyValue, -2, 2, -127, 127))
+        leftPower = int(mapRange(leftJoyValue, -2, 2, 0, 255))
+        rightPower = int(mapRange(rightJoyValue, -2, 2, 0, 255))
 
-        packet = "<{:0=+4d} {:0=+4d}>".format(leftPower, rightPower)
+        packet = "<CM{:0>3d}{:0>3d}>".format(leftPower, rightPower)
 
         ser.write(packet)
         print(packet)
 
-        print(ser.readline())
+        #print(ser.readline())
         #print(ser.readline())
 
 

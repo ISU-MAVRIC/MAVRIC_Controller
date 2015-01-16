@@ -1,5 +1,6 @@
 from PySide import QtCore, QtGui
 
+
 class ConsoleWidget(QtGui.QDockWidget):
     """A dockable widget to display the command console."""
 

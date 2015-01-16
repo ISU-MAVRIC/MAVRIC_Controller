@@ -21,12 +21,12 @@ class ArmController(QtCore.QObject):
         Args:
             azimuth (float): Float [-1,1] representing the speed of azimuth rotation.
             shoulder (float): Float [-1,1] representing the speed of shoulder rotation.
-            elbow (float): Float [-1,1] representing the speed of eblow rotation.
+            elbow (float): Float [-1,1] representing the speed of elbow rotation.
 
         Returns:
             Azimuth output  int [0,255].
             Shoulder output int [0,255].
-            Elevator output int [0,2555].
+            Elbow output int [0,255].
         """
         a = int(round((127.0 * azimuth * self.azimuth_speed) + 127))
         s = int(round((127.0 * shoulder * self.shoulder_speed) + 127))

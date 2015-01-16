@@ -2,6 +2,7 @@ __author__ = 'Mark'
 
 import serial
 import pygame
+import sys
 
 
 def main():
@@ -10,7 +11,7 @@ def main():
 
     clock = pygame.time.Clock()
 
-    ser = serial.Serial('COM4', 57600); #Virtual Serial Port for now
+    ser = serial.Serial('COM3', 57600); #Virtual Serial Port for now
 
     #print joystick info
     # joystick_count = pygame.joystick.get_count()
@@ -27,7 +28,7 @@ def main():
     joystick.init()
 
     while True:
-        clock.tick(100)
+        clock.tick(10)
         pygame.event.pump()
         joyX = -joystick.get_axis(1)
         joyY = -joystick.get_axis(3)
@@ -35,15 +36,18 @@ def main():
         # print(leftJoyValue)
         # print(rightJoyValue)
 
-        leftPower = int(mapRange(joyX, -1, 1, -127, 127))
-        rightPower = int(mapRange(joyY, -1, 1, -127, 127))
+        leftPower = int(mapRange(joyX, -1, 1, 0, 255))
+        rightPower = int(mapRange(joyY, -1, 1, 0, 255))
 
-        packet = "<{:0=+4d} {:0=+4d}>".format(leftPower, rightPower)
+        packet = "<CM{:0>3d}{:0>3d}>".format(leftPower, rightPower)
 
         ser.write(packet)
         print(packet)
 
-        print(ser.readline())
+        while(ser.inWaiting()):
+            sys.stdout.write(ser.read())
+
+        #print(ser.readline())
         #print(ser.readline())
 
 
