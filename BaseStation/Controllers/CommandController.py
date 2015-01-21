@@ -4,6 +4,7 @@ from PySide import QtCore
 
 from ArmController import *
 from DriveController import *
+from CameraController import *
 
 class CommandController(QtCore.QObject):
     """A class to encode and decode commands."""
@@ -18,6 +19,7 @@ class CommandController(QtCore.QObject):
 
         self.drive_control = DriveController(self)
         self.arm_control = ArmController(self)
+        self.camera_control = CameraController(self)
 
         self.state = "none"
         self.buffer = bytearray()
@@ -38,7 +40,7 @@ class CommandController(QtCore.QObject):
             angle[0], angle[1], angle[2], angle[3], angle[4], angle[5]
         )
 
-        drive_cmd = "<cm{:s}{:s}{:s}{:s}{:s}{:s}>\n".format(
+        drive_cmd = "<cm{:s}{:s}{:s}{:s}{:s}{:s}>".format(
             chr(drive[0]), chr(drive[1]), chr(drive[2]),
             chr(drive[3]), chr(drive[4]), chr(drive[5])
         )
@@ -62,6 +64,19 @@ class CommandController(QtCore.QObject):
             chr(a), chr(s), chr(e)
         )
         self.parent().port_controller.write(arm_cmd)
+
+    def camera_pos_command(self, pan, tilt):
+        """ Write Comment """
+        p, t = self.camera_control.compute(pan, tilt)
+
+        print "<cc {:03d} {:03d} >".format(
+            p, t
+        )
+
+        camera_cmd = "<cc{:s}{:s}X>".format(
+            chr(p), chr(t)
+        )
+        self.parent().port_controller.write(camera_cmd)
 
     def parse(self, byte):
         """Decode an incoming byte."""
@@ -143,7 +158,6 @@ class CommandController(QtCore.QObject):
                     print "Cam Pan: {:d}".format(self.buffer[0])
                     print "Cam Tilt: {:d}".format(self.buffer[1])
                     print "Cam Zoom: {:d}".format(self.buffer[2])
-
                     print "end"
                     self.state = "none"
                 else:

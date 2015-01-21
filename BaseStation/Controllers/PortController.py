@@ -37,7 +37,7 @@ class PortController(QtCore.QObject):
         """
         self.port.open()
         if self.port.isOpen() == True:
-            self.timer.start(500)
+            self.timer.start(50)
             return True
 
         return False

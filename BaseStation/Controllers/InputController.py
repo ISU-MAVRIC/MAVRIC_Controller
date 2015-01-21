@@ -126,7 +126,9 @@ class InputController(QtCore.QObject):
         elbow_out = self.expo(elbow_raw, self.arm_elbow['expo'])
         if self.arm_elbow['reverse']: elbow_out = -1.0 * elbow_out
 
-        self.controller.arm_speed_command(azimuth_out, shoulder_out, elbow_out)
+        #self.controller.arm_speed_command(azimuth_out, shoulder_out, elbow_out)
+        self.controller.camera_pos_command(azimuth_out, shoulder_out)
+
 
     @staticmethod
     def expo(raw, expo):

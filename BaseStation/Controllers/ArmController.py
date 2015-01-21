@@ -1,5 +1,6 @@
 from PySide import QtCore
 
+
 class ArmController(QtCore.QObject):
     """A class to abstract controlling the arm."""
 
