@@ -81,37 +81,49 @@ class InputDialog(QtGui.QDialog):
         map_layout.addWidget(QtGui.QLabel('Controller:', self), 0, 1)
         map_layout.addWidget(QtGui.QLabel('Axis:', self), 0, 2)
         map_layout.addWidget(QtGui.QLabel('Expo:', self), 0, 3)
-        map_layout.addWidget(QtGui.QLabel('Reverse:', self), 0, 4)
+        map_layout.addWidget(QtGui.QLabel('Invert:', self), 0, 4)
+        map_layout.addWidget(QtGui.QLabel('Use\nButton:', self), 0, 5)
 
         # Get saved left_drive settings
         left_control_index = self.settings.value('input/map/left_drive/control')
         left_axis_index = self.settings.value('input/map/left_drive/axis')
         left_expo = self.settings.value('input/map/left_drive/expo')
-        left_reverse = self.settings.value('input/map/left_drive/reverse') == 'true'
+        left_invert = self.settings.value('input/map/left_drive/invert') == 'true'
 
         # Get saved right_drive settings
         right_control_index = self.settings.value('input/map/right_drive/control')
         right_axis_index = self.settings.value('input/map/right_drive/axis')
         right_expo = self.settings.value('input/map/right_drive/expo')
-        right_reverse = self.settings.value('input/map/right_drive/reverse') == 'true'
+        right_invert = self.settings.value('input/map/right_drive/invert') == 'true'
 
         # Get saved arm_azimuth settings
         azimuth_control_index = self.settings.value('input/map/arm_azimuth/control')
         azimuth_axis_index = self.settings.value('input/map/arm_azimuth/axis')
         azimuth_expo = self.settings.value('input/map/arm_azimuth/expo')
-        azimuth_reverse = self.settings.value('input/map/arm_azimuth/reverse') == 'true'
+        azimuth_invert = self.settings.value('input/map/arm_azimuth/invert') == 'true'
 
         # Get saved arm_shoulder settings
         shoulder_control_index = self.settings.value('input/map/arm_shoulder/control')
         shoulder_axis_index = self.settings.value('input/map/arm_shoulder/axis')
         shoulder_expo = self.settings.value('input/map/arm_shoulder/expo')
-        shoulder_reverse = self.settings.value('input/map/arm_shoulder/reverse') == 'true'
+        shoulder_invert = self.settings.value('input/map/arm_shoulder/invert') == 'true'
 
         # Get saved arm_elbow settings
         elbow_control_index = self.settings.value('input/map/arm_elbow/control')
         elbow_axis_index = self.settings.value('input/map/arm_elbow/axis')
         elbow_expo = self.settings.value('input/map/arm_elbow/expo')
-        elbow_reverse = self.settings.value('input/map/arm_elbow/reverse') == 'true'
+        elbow_invert = self.settings.value('input/map/arm_elbow/invert') == 'true'
+
+        # Get saved camera_pan settings
+        pan_control_index = self.settings.value('input/map/arm_elbow/control')
+        pan_use_axis = self.settings.value('input/map/camera_pan/use_axis') == 'true'
+        pan_axis_index = self.settings.value('input/map/arm_elbow/axis')
+        pan_button_p = self.settings.value('input/map/camera_pan/button_p')
+        pan_button_n = self.settings.value('input/map/camera_pan/button_n')
+        pan_button_speed = self.settings.value('input/map/camera_pan/button_speed')
+        pan_expo = self.settings.value('input/map/arm_elbow/expo')
+        pan_invert = self.settings.value('input/map/arm_elbow/invert') == 'true'
+
 
         # left_drive setting widgets
         map_layout.addWidget(QtGui.QLabel('Left Drive:', self), 1, 0,
@@ -130,10 +142,10 @@ class InputDialog(QtGui.QDialog):
         if left_expo is not None:
             self.left_expo.setText(str(left_expo))
         map_layout.addWidget(self.left_expo, 1, 3)
-        self.left_reverse = QtGui.QCheckBox(self)
-        if left_reverse is not None:
-            self.left_reverse.setChecked(left_reverse)
-        map_layout.addWidget(self.left_reverse, 1, 4)
+        self.left_invert = QtGui.QCheckBox(self)
+        if left_invert is not None:
+            self.left_invert.setChecked(left_invert)
+        map_layout.addWidget(self.left_invert, 1, 4)
 
         # right_drive setting widgets
         map_layout.addWidget(QtGui.QLabel('Right Drive:', self), 2, 0,
@@ -152,10 +164,10 @@ class InputDialog(QtGui.QDialog):
         if right_expo is not None:
             self.right_expo.setText(str(right_expo))
         map_layout.addWidget(self.right_expo, 2, 3)
-        self.right_reverse = QtGui.QCheckBox(self)
-        if right_reverse is not None:
-            self.right_reverse.setChecked(right_reverse)
-        map_layout.addWidget(self.right_reverse, 2, 4)
+        self.right_invert = QtGui.QCheckBox(self)
+        if right_invert is not None:
+            self.right_invert.setChecked(right_invert)
+        map_layout.addWidget(self.right_invert, 2, 4)
 
         # arm_azimuth setting widgets
         map_layout.addWidget(QtGui.QLabel('Arm Azimuth:', self), 3, 0,
@@ -174,10 +186,10 @@ class InputDialog(QtGui.QDialog):
         if azimuth_expo is not None:
             self.azimuth_expo.setText(str(azimuth_expo))
         map_layout.addWidget(self.azimuth_expo, 3, 3)
-        self.azimuth_reverse = QtGui.QCheckBox(self)
-        if azimuth_reverse is not None:
-            self.azimuth_reverse.setChecked(azimuth_reverse)
-        map_layout.addWidget(self.azimuth_reverse, 3, 4)
+        self.azimuth_invert = QtGui.QCheckBox(self)
+        if azimuth_invert is not None:
+            self.azimuth_invert.setChecked(azimuth_invert)
+        map_layout.addWidget(self.azimuth_invert, 3, 4)
 
         # arm_shoulder setting widgets
         map_layout.addWidget(QtGui.QLabel('Arm Shoulder:', self), 4, 0,
@@ -196,10 +208,10 @@ class InputDialog(QtGui.QDialog):
         if shoulder_expo is not None:
             self.shoulder_expo.setText(str(shoulder_expo))
         map_layout.addWidget(self.shoulder_expo, 4, 3)
-        self.shoulder_reverse = QtGui.QCheckBox(self)
-        if shoulder_reverse is not None:
-            self.shoulder_reverse.setChecked(shoulder_reverse)
-        map_layout.addWidget(self.shoulder_reverse, 4, 4)
+        self.shoulder_invert = QtGui.QCheckBox(self)
+        if shoulder_invert is not None:
+            self.shoulder_invert.setChecked(shoulder_invert)
+        map_layout.addWidget(self.shoulder_invert, 4, 4)
 
         # arm_elbow setting widgets
         map_layout.addWidget(QtGui.QLabel('Arm Elbow:', self), 5, 0,
@@ -218,10 +230,37 @@ class InputDialog(QtGui.QDialog):
         if elbow_expo is not None:
             self.elbow_expo.setText(str(elbow_expo))
         map_layout.addWidget(self.elbow_expo, 5, 3)
-        self.elbow_reverse = QtGui.QCheckBox(self)
-        if elbow_reverse is not None:
-            self.elbow_reverse.setChecked(elbow_reverse)
-        map_layout.addWidget(self.elbow_reverse, 5, 4)
+        self.elbow_invert = QtGui.QCheckBox(self)
+        if elbow_invert is not None:
+            self.elbow_invert.setChecked(elbow_invert)
+        map_layout.addWidget(self.elbow_invert, 5, 4)
+
+        # camera_pan setting widgets
+        map_layout.addWidget(QtGui.QLabel('Camera Pan:', self), 6, 0,
+                             QtCore.Qt.AlignmentFlag.AlignRight)
+        self.pan_control = QtGui.QComboBox(self)
+        self.pan_control.addItems(self.controllers)
+        if pan_control_index is not None:
+            self.pan_control.setCurrentIndex(pan_control_index)
+        map_layout.addWidget(self.pan_control, 6, 1)
+        self.pan_axis = QtGui.QComboBox(self)
+        self.pan_axis.addItems(self.axes)
+        if pan_axis_index is not None:
+            self.pan_axis.setCurrentIndex(pan_axis_index)
+        map_layout.addWidget(self.pan_axis, 6, 2)
+        self.pan_expo = QtGui.QLineEdit(self)
+        if pan_expo is not None:
+            self.pan_expo.setText(str(pan_expo))
+        map_layout.addWidget(self.pan_expo, 6, 3)
+        self.pan_invert = QtGui.QCheckBox(self)
+        if pan_invert is not None:
+            self.pan_invert.setChecked(pan_invert)
+        map_layout.addWidget(self.pan_invert, 6, 4)
+        self.pan_use_axis = QtGui.QCheckBox(self)
+        if pan_use_axis is not None:
+            self.pan_use_axis.setChecked(pan_use_axis)
+        self.pan_use_axis.setToolTip("Check to use buttons instead of an axis")
+        map_layout.addWidget(self.pan_use_axis, 6, 5)
 
         # Ok/cancel buttons
         buttons = QtGui.QHBoxLayout()
@@ -272,8 +311,8 @@ class InputDialog(QtGui.QDialog):
         self.settings.setValue('input/map/left_drive/axis', left_axis_index)
         left_expo = float(self.left_expo.text())
         self.settings.setValue('input/map/left_drive/expo', left_expo)
-        left_reverse = self.left_reverse.isChecked()
-        self.settings.setValue('input/map/left_drive/reverse', left_reverse)
+        left_invert = self.left_invert.isChecked()
+        self.settings.setValue('input/map/left_drive/invert', left_invert)
 
         # Save right_drive settings
         right_control_index = self.right_control.currentIndex()
@@ -282,8 +321,8 @@ class InputDialog(QtGui.QDialog):
         self.settings.setValue('input/map/right_drive/axis', right_axis_index)
         right_expo = float(self.right_expo.text())
         self.settings.setValue('input/map/right_drive/expo', right_expo)
-        right_reverse = self.right_reverse.isChecked()
-        self.settings.setValue('input/map/right_drive/reverse', right_reverse)
+        right_invert = self.right_invert.isChecked()
+        self.settings.setValue('input/map/right_drive/invert', right_invert)
 
         # Save arm_azimuth settings
         azimuth_control_index = self.azimuth_control.currentIndex()
@@ -292,8 +331,8 @@ class InputDialog(QtGui.QDialog):
         self.settings.setValue('input/map/arm_azimuth/axis', azimuth_axis_index)
         azimuth_expo = float(self.azimuth_expo.text())
         self.settings.setValue('input/map/arm_azimuth/expo', azimuth_expo)
-        azimuth_reverse = self.azimuth_reverse.isChecked()
-        self.settings.setValue('input/map/arm_azimuth/reverse', azimuth_reverse)
+        azimuth_invert = self.azimuth_invert.isChecked()
+        self.settings.setValue('input/map/arm_azimuth/invert', azimuth_invert)
 
         # Save arm_shoulder settings
         shoulder_control_index = self.shoulder_control.currentIndex()
@@ -302,8 +341,8 @@ class InputDialog(QtGui.QDialog):
         self.settings.setValue('input/map/arm_shoulder/axis', shoulder_axis_index)
         shoulder_expo = float(self.shoulder_expo.text())
         self.settings.setValue('input/map/arm_shoulder/expo', shoulder_expo)
-        shoulder_reverse = self.shoulder_reverse.isChecked()
-        self.settings.setValue('input/map/arm_shoulder/reverse', shoulder_reverse)
+        shoulder_invert = self.shoulder_invert.isChecked()
+        self.settings.setValue('input/map/arm_shoulder/invert', shoulder_invert)
 
         # Save arm_elbow settings
         elbow_control_index = self.elbow_control.currentIndex()
@@ -312,8 +351,22 @@ class InputDialog(QtGui.QDialog):
         self.settings.setValue('input/map/arm_elbow/axis', elbow_axis_index)
         elbow_expo = float(self.elbow_expo.text())
         self.settings.setValue('input/map/arm_elbow/expo', elbow_expo)
-        elbow_reverse = self.elbow_reverse.isChecked()
-        self.settings.setValue('input/map/arm_elbow/reverse', elbow_reverse)
+        elbow_invert = self.elbow_invert.isChecked()
+        self.settings.setValue('input/map/arm_elbow/invert', elbow_invert)
+
+        # Save camera_pan settings
+        pan_control_index = self.pan_control.currentIndex()
+        self.settings.setValue('input/map/camera_pan/control', pan_control_index)
+        pan_use_axis = self.pan_use_axis.isChecked()
+        self.settins.setValue('input/map/camera_pan/use_axis', pan_use_axis)
+        pan_axis_index = self.pan_axis.currentIndex()
+        self.settings.setValue('input/map/camera_pan/axis', pan_axis_index)
+        pan_expo = float(self.pan_expo.text())
+        self.settings.setValue('input/map/camera_pan/expo', pan_expo)
+        pan_invert = self.pan_invert.isChecked()
+        self.settings.setValue('input/map/camera_pan/invert', pan_invert)
+
+
 
         # Notify the input controller
         QtGui.QApplication.instance().input_controller.configure()
