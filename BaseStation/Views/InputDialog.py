@@ -262,6 +262,32 @@ class InputDialog(QtGui.QDialog):
         self.pan_use_axis.setToolTip("Check to use buttons instead of an axis")
         map_layout.addWidget(self.pan_use_axis, 6, 5)
 
+        self.pan_buttons_layout = QtGui.QGridLayout(self)
+
+        self.pan_buttons_layout.addWidget(QtGui.QLabel('Positive', self), 0, 0)
+        self.pan_button_p = QtGui.QLineEdit(self)
+        if pan_button_p is not None:
+            self.pan_button_p.setText(str(pan_button_p))
+        self.pan_buttons_layout.addWidget(self.pan_button_p, 0, 1)
+
+        self.pan_buttons_layout.addWidget(QtGui.QLabel('Negative', self), 1, 0)
+        self.pan_button_n = QtGui.QLineEdit(self)
+        if pan_button_n is not None:
+            self.pan_button_n.setText(str(pan_button_n))
+        self.pan_buttons_layout.addWidget(self.pan_button_n, 1, 1)
+
+        map_layout.addLayout(self.pan_buttons_layout, 6, 6)
+
+        self.pan_button_speed = QtGui.QLineEdit(self)
+        if pan_button_speed is not None:
+            self.pan_button_speed.setText(str(pan_button_speed))
+        map_layout.addWidget(pan_button_speed, 6, 7)
+
+
+
+
+
+
         # Ok/cancel buttons
         buttons = QtGui.QHBoxLayout()
         buttons.addStretch(1)
@@ -361,6 +387,12 @@ class InputDialog(QtGui.QDialog):
         self.settins.setValue('input/map/camera_pan/use_axis', pan_use_axis)
         pan_axis_index = self.pan_axis.currentIndex()
         self.settings.setValue('input/map/camera_pan/axis', pan_axis_index)
+        pan_button_p = int(self.pan_button_p.text())
+        self.settings.setValue('input/map/camera_pan/button_p', pan_button_p)
+        pan_button_n = int(self.pan_button_n.text())
+        self.settings.setValue('input/map/camera_pan/button_n', pan_button_n)
+        pan_button_speed = float(self.pan_button_speed.text())
+        self.settings.setValue('input/map/camera_pan/button_speed', pan_button_speed)
         pan_expo = float(self.pan_expo.text())
         self.settings.setValue('input/map/camera_pan/expo', pan_expo)
         pan_invert = self.pan_invert.isChecked()

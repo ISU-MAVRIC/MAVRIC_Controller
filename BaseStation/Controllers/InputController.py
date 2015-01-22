@@ -193,22 +193,24 @@ class InputController(QtCore.QObject):
                       camera_pan_stick.get_button(self.camera_pan['button_n'])
             pan_out = pan_raw * self.camera_pan['button_speed']
 
-        """CAMERA TILT"""
-        if self.camera_tilt['control'] == 0:
-            camera_tilt_stick = self.primary
-        else:
-            camera_tilt_stick = self.secondary
+        # """CAMERA TILT"""
+        # if self.camera_tilt['control'] == 0:
+        #     camera_tilt_stick = self.primary
+        # else:
+        #     camera_tilt_stick = self.secondary
+        #
+        # if self.camera_tilt['use_axis']:
+        #     tilt_raw = camera_tilt_stick.get_axis(self.camera_tilt['axis'])
+        #     tilt_out = self.expo(tilt_raw, self.camera_tilt['expo'])
+        #     if self.camera_tilt['invert']:
+        #         tilt_out *= -1.0
+        # else:
+        #     # pressing both buttons causes them to cancel out
+        #     tilt_raw = camera_tilt_stick.get_button(self.camera_tilt['button_p']) - \
+        #                camera_tilt_stick.get_button(self.camera_tilt['button_n'])
+        #     tilt_out = tilt_raw * self.camera_tilt['button_speed']
 
-        if self.camera_tilt['use_axis']:
-            tilt_raw = camera_tilt_stick.get_axis(self.camera_tilt['axis'])
-            tilt_out = self.expo(tilt_raw, self.camera_tilt['expo'])
-            if self.camera_tilt['invert']:
-                tilt_out *= -1.0
-        else:
-            # pressing both buttons causes them to cancel out
-            tilt_raw = camera_tilt_stick.get_button(self.camera_tilt['button_p']) - \
-                       camera_tilt_stick.get_button(self.camera_tilt['button_n'])
-            tilt_out = tilt_raw * self.camera_tilt['button_speed']
+        tilt_out = 255
 
         self.controller.camera_pos_command(pan_out, tilt_out)
 
