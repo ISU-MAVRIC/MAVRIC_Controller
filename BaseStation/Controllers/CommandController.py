@@ -4,6 +4,7 @@ from PySide import QtCore
 
 from ArmController import *
 from DriveController import *
+from CameraController import *
 
 class CommandController(QtCore.QObject):
     """A class to encode and decode commands."""
@@ -18,6 +19,7 @@ class CommandController(QtCore.QObject):
 
         self.drive_control = DriveController(self)
         self.arm_control = ArmController(self)
+        self.camera_control = CameraController(self)
 
         self.state = "none"
         self.buffer = bytearray()
@@ -38,11 +40,21 @@ class CommandController(QtCore.QObject):
             angle[0], angle[1], angle[2], angle[3], angle[4], angle[5]
         )
 
-        drive_cmd = "<cm{:s}{:s}{:s}{:s}{:s}{:s}>\n".format(
+        drive_cmd = "<cm{:s}{:s}{:s}{:s}{:s}{:s}>".format(
             chr(drive[0]), chr(drive[1]), chr(drive[2]),
             chr(drive[3]), chr(drive[4]), chr(drive[5])
         )
         self.parent().port_controller.write(drive_cmd)
+
+        self.parent().window.overview_tab.propulsion_frame.left_speed_bar.setValue(drive[0])
+        self.parent().window.overview_tab.propulsion_frame.m1_speed_bar.setValue(drive[0])
+        self.parent().window.overview_tab.propulsion_frame.m2_speed_bar.setValue(drive[1])
+        self.parent().window.overview_tab.propulsion_frame.m3_speed_bar.setValue(drive[2])
+
+        self.parent().window.overview_tab.propulsion_frame.right_speed_bar.setValue(drive[3])
+        self.parent().window.overview_tab.propulsion_frame.m4_speed_bar.setValue(drive[3])
+        self.parent().window.overview_tab.propulsion_frame.m5_speed_bar.setValue(drive[4])
+        self.parent().window.overview_tab.propulsion_frame.m6_speed_bar.setValue(drive[5])
 
     def arm_speed_command(self, azimuth, shoulder, elevation):
         """Send an arm speed command to the rover.
@@ -62,6 +74,26 @@ class CommandController(QtCore.QObject):
             chr(a), chr(s), chr(e)
         )
         self.parent().port_controller.write(arm_cmd)
+
+
+
+    def camera_pos_command(self, pan, tilt):
+        """ Write Comment """
+        p, t = self.camera_control.compute(pan, tilt)
+
+        print "<cc {:03d} {:03d} >".format(
+            p, t
+        )
+
+        camera_cmd = "<cc{:s}{:s}X>".format(
+            chr(p), chr(t)
+        )
+        self.parent().port_controller.write(camera_cmd)
+
+        self.parent().window.overview_tab.camera_frame.pan_bar.setValue(p)
+        self.parent().window.overview_tab.camera_frame.pan_field.setText(str(p))
+        self.parent().window.overview_tab.camera_frame.tilt_bar.setValue(t)
+        self.parent().window.overview_tab.camera_frame.tilt_field.setText(str(t))
 
     def parse(self, byte):
         """Decode an incoming byte."""
@@ -143,7 +175,6 @@ class CommandController(QtCore.QObject):
                     print "Cam Pan: {:d}".format(self.buffer[0])
                     print "Cam Tilt: {:d}".format(self.buffer[1])
                     print "Cam Zoom: {:d}".format(self.buffer[2])
-
                     print "end"
                     self.state = "none"
                 else:

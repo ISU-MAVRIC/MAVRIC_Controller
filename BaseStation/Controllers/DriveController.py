@@ -1,5 +1,6 @@
 from PySide import QtCore
 
+
 class DriveController(QtCore.QObject):
     """A class to abstract controlling the drive."""
 
@@ -30,4 +31,4 @@ class DriveController(QtCore.QObject):
         right_drive = int(round((127.0 * right) + 127))
 
         return [left_drive, left_drive, left_drive,
-            right_drive, right_drive, right_drive], [0, 0, 0, 0, 0, 0]
+                right_drive, right_drive, right_drive], [0, 0, 0, 0, 0, 0]

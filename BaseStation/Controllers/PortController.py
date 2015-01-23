@@ -37,7 +37,7 @@ class PortController(QtCore.QObject):
         """
         self.port.open()
         if self.port.isOpen() == True:
-            self.timer.start(500)
+            self.timer.start(50)
             return True
 
         return False
@@ -49,8 +49,17 @@ class PortController(QtCore.QObject):
 
     def configure(self):
         """Load the configuration from the application settings object."""
+
         port_name = self.settings.value("comm/port")
         port_baud = self.settings.value("comm/baud")
+
+        """Resets baudrate to 57600 if value is invalid/missing"""
+        try:
+            int(port_baud)
+        except TypeError:
+            self.settings.setValue("comm/baud", 57600)
+            port_baud = self.settings.value("comm/baud")
+            print "Invalid Baudrate: Resetting to 57600"
 
         self.port.port = port_name
         self.port.baudrate = port_baud

@@ -25,6 +25,7 @@ class CameraFrame(QtGui.QGroupBox):
         self.pan_field.setReadOnly(True)
         pan_layout.addWidget(self.pan_field)
         self.pan_bar = QtGui.QProgressBar(self)
+        self.pan_bar.setRange(0, 255)
         pan_layout.addWidget(self.pan_bar)
         layout.addRow('Pan:', pan_layout)
 
@@ -34,6 +35,7 @@ class CameraFrame(QtGui.QGroupBox):
         self.tilt_field.setReadOnly(True)
         tilt_layout.addWidget(self.tilt_field)
         self.tilt_bar = QtGui.QProgressBar(self)
+        self.tilt_bar.setRange(0, 255)
         tilt_layout.addWidget(self.tilt_bar)
         layout.addRow('Tilt:', tilt_layout)
 
@@ -43,5 +45,6 @@ class CameraFrame(QtGui.QGroupBox):
         self.zoom_field.setReadOnly(True)
         zoom_layout.addWidget(self.zoom_field)
         self.zoom_bar = QtGui.QProgressBar(self)
+        self.zoom_bar.setRange(0, 255)
         zoom_layout.addWidget(self.zoom_bar)
         layout.addRow('Zoom:', zoom_layout)
