@@ -6,6 +6,8 @@ from ArmController import *
 from DriveController import *
 from CameraController import *
 
+from Views.CameraFrame import *
+
 class CommandController(QtCore.QObject):
     """A class to encode and decode commands."""
 
@@ -77,6 +79,8 @@ class CommandController(QtCore.QObject):
             chr(p), chr(t)
         )
         self.parent().port_controller.write(camera_cmd)
+
+
 
     def parse(self, byte):
         """Decode an incoming byte."""

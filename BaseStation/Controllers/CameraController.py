@@ -13,7 +13,7 @@ class CameraController(QtCore.QObject):
     tilt_pos = 127
 
     def __init__(self, parent=None):
-        """Construct and initialize an ArmController.
+        """Construct and initialize a CameraController.
 
         Args:
             parent (QObject): Parent Qt object.

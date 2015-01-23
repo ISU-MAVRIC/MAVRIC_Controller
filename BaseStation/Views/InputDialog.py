@@ -82,7 +82,7 @@ class InputDialog(QtGui.QDialog):
         map_layout.addWidget(QtGui.QLabel('Axis:', self), 0, 2)
         map_layout.addWidget(QtGui.QLabel('Expo:', self), 0, 3)
         map_layout.addWidget(QtGui.QLabel('Invert:', self), 0, 4)
-        map_layout.addWidget(QtGui.QLabel('Use\nButton:', self), 0, 5)
+        map_layout.addWidget(QtGui.QLabel('Use\nAxis:', self), 0, 5)
         map_layout.addWidget(QtGui.QLabel('Button Assign:', self), 0, 6)
         map_layout.addWidget(QtGui.QLabel('Button Speed:', self), 0, 7)
 
@@ -247,7 +247,9 @@ class InputDialog(QtGui.QDialog):
             self.elbow_invert.setChecked(elbow_invert)
         map_layout.addWidget(self.elbow_invert, 5, 4)
 
-        # camera_pan setting widgets
+        ###############################
+        #  camera_pan setting widgets #
+        ###############################
         map_layout.addWidget(QtGui.QLabel('Camera Pan:', self), 6, 0,
                              QtCore.Qt.AlignmentFlag.AlignRight)
         # controller entry
@@ -276,7 +278,7 @@ class InputDialog(QtGui.QDialog):
         self.pan_use_axis = QtGui.QCheckBox(self)
         if pan_use_axis is not None:
             self.pan_use_axis.setChecked(pan_use_axis)
-        self.pan_use_axis.setToolTip("Check to use buttons instead of an axis")
+        self.pan_use_axis.setToolTip("Check to use axis instead of buttons")
         map_layout.addWidget(self.pan_use_axis, 6, 5)
 
         # positive and negative button boxes
@@ -305,9 +307,9 @@ class InputDialog(QtGui.QDialog):
             self.pan_button_speed.setText(str(pan_button_speed))
         map_layout.addWidget(self.pan_button_speed, 6, 7)
 
-        #############################
-        # camera_tilt setting widgets
-        #############################
+        ###############################
+        # camera_tilt setting widgets #
+        ###############################
         map_layout.addWidget(QtGui.QLabel('Camera Tilt:', self), 7, 0,
                              QtCore.Qt.AlignmentFlag.AlignRight)
         # controller entry
@@ -336,7 +338,7 @@ class InputDialog(QtGui.QDialog):
         self.tilt_use_axis = QtGui.QCheckBox(self)
         if tilt_use_axis is not None:
             self.tilt_use_axis.setChecked(tilt_use_axis)
-        self.tilt_use_axis.setToolTip("Check to use buttons instead of an axis")
+        self.tilt_use_axis.setToolTip("Check to use axis instead of buttons")
         map_layout.addWidget(self.tilt_use_axis, 7, 5)
 
         # positive and negative button boxes

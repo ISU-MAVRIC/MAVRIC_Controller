@@ -116,22 +116,22 @@ class InputController(QtCore.QObject):
         # using input instead of axis since many functions will be mapped to buttons
         self.camera_pan = {
             'control': self.settings.value('input/map/camera_pan/control'),
-            'use_axis': self.settings.value('input/map/camera_pan/use_axis'),
+            'use_axis': self.settings.value('input/map/camera_pan/use_axis') == 'true',
             'axis': self.settings.value('input/map/camera_pan/axis'),
             'button_p': self.settings.value('input/map/camera_pan/button_p'),
             'button_n': self.settings.value('input/map/camera_pan/button_n'),
-            'button_speed': self.settings.value('input/map/camera_pan/button_speed'),
+            'button_speed': float(self.settings.value('input/map/camera_pan/button_speed')),
             'expo': float(self.settings.value('input/map/camera_pan/expo')),
             'invert': self.settings.value('input/map/camera_pan/invert') == 'true'
         }
 
         self.camera_tilt = {
             'control': self.settings.value('input/map/camera_tilt/control'),
-            'use_axis': self.settings.value('input/map/camera_tilt/use_axis'),
+            'use_axis': self.settings.value('input/map/camera_tilt/use_axis') == 'true',
             'axis': self.settings.value('input/map/camera_tilt/axis'),
-            'button_p': self.settings.value('input/map/camera_pan/button_p'),
-            'button_n': self.settings.value('input/map/camera_pan/button_n'),
-            'button_speed': self.settings.value('input/map/camera_pan/button_speed'),
+            'button_p': self.settings.value('input/map/camera_tilt/button_p'),
+            'button_n': self.settings.value('input/map/camera_tilt/button_n'),
+            'button_speed': float(self.settings.value('input/map/camera_tilt/button_speed')),
             'expo': float(self.settings.value('input/map/camera_tilt/expo')),
             'invert': self.settings.value('input/map/camera_tilt/invert') == 'true'
         }
@@ -202,29 +202,30 @@ class InputController(QtCore.QObject):
                 pan_out *= -1.0
         else:
             # pressing both buttons causes them to cancel out
-            pan_raw = camera_pan_stick.get_button(self.camera_pan['button_p']) - \
-                      camera_pan_stick.get_button(self.camera_pan['button_n'])
+            # subtract since buttons are labeled starting at 1, indexed starting at 0
+            pan_raw = camera_pan_stick.get_button(self.camera_pan['button_p'] - 1) - \
+                      camera_pan_stick.get_button(self.camera_pan['button_n'] - 1)
             pan_out = pan_raw * self.camera_pan['button_speed']
 
-        # """CAMERA TILT"""
-        # if self.camera_tilt['control'] == 0:
-        #     camera_tilt_stick = self.primary
-        # else:
-        #     camera_tilt_stick = self.secondary
-        #
-        # if self.camera_tilt['use_axis']:
-        #     tilt_raw = camera_tilt_stick.get_axis(self.camera_tilt['axis'])
-        #     tilt_out = self.expo(tilt_raw, self.camera_tilt['expo'])
-        #     if self.camera_tilt['invert']:
-        #         tilt_out *= -1.0
-        # else:
-        #     # pressing both buttons causes them to cancel out
-        #     tilt_raw = camera_tilt_stick.get_button(self.camera_tilt['button_p']) - \
-        #                camera_tilt_stick.get_button(self.camera_tilt['button_n'])
-        #     tilt_out = tilt_raw * self.camera_tilt['button_speed']
+        """CAMERA TILT"""
+        if self.camera_tilt['control'] == 0:
+            camera_tilt_stick = self.primary
+        else:
+            camera_tilt_stick = self.secondary
 
-        tilt_out = 255
+        if self.camera_tilt['use_axis']:
+            tilt_raw = camera_tilt_stick.get_axis(self.camera_tilt['axis'])
+            tilt_out = self.expo(tilt_raw, self.camera_tilt['expo'])
+            if self.camera_tilt['invert']:
+                tilt_out *= -1.0
+        else:
+            # pressing both buttons causes them to cancel out
+            # subtract since buttons are labeled starting at 1, indexed starting at 0
+            tilt_raw = camera_tilt_stick.get_button(self.camera_tilt['button_p'] - 1) - \
+                       camera_tilt_stick.get_button(self.camera_tilt['button_n'] - 1)
+            tilt_out = tilt_raw * self.camera_tilt['button_speed']
 
+        print "Pan Out: {} Tilt Out: {}".format(pan_out, tilt_out)
         self.controller.camera_pos_command(pan_out, tilt_out)
 
 
