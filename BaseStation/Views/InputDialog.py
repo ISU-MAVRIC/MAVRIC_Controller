@@ -83,6 +83,8 @@ class InputDialog(QtGui.QDialog):
         map_layout.addWidget(QtGui.QLabel('Expo:', self), 0, 3)
         map_layout.addWidget(QtGui.QLabel('Invert:', self), 0, 4)
         map_layout.addWidget(QtGui.QLabel('Use\nButton:', self), 0, 5)
+        map_layout.addWidget(QtGui.QLabel('Button Assign:', self), 0, 6)
+        map_layout.addWidget(QtGui.QLabel('Button Speed:', self), 0, 7)
 
         # Get saved left_drive settings
         left_control_index = self.settings.value('input/map/left_drive/control')
@@ -115,14 +117,24 @@ class InputDialog(QtGui.QDialog):
         elbow_invert = self.settings.value('input/map/arm_elbow/invert') == 'true'
 
         # Get saved camera_pan settings
-        pan_control_index = self.settings.value('input/map/arm_elbow/control')
+        pan_control_index = self.settings.value('input/map/camera_pan/control')
         pan_use_axis = self.settings.value('input/map/camera_pan/use_axis') == 'true'
-        pan_axis_index = self.settings.value('input/map/arm_elbow/axis')
+        pan_axis_index = self.settings.value('input/map/camera_pan/axis')
         pan_button_p = self.settings.value('input/map/camera_pan/button_p')
         pan_button_n = self.settings.value('input/map/camera_pan/button_n')
         pan_button_speed = self.settings.value('input/map/camera_pan/button_speed')
-        pan_expo = self.settings.value('input/map/arm_elbow/expo')
-        pan_invert = self.settings.value('input/map/arm_elbow/invert') == 'true'
+        pan_expo = self.settings.value('input/map/camera_pan/expo')
+        pan_invert = self.settings.value('input/map/camera_pan/invert') == 'true'
+
+        # Get saved camera_tilt settings
+        tilt_control_index = self.settings.value('input/map/camera_tilt/control')
+        tilt_use_axis = self.settings.value('input/map/camera_tilt/use_axis') == 'true'
+        tilt_axis_index = self.settings.value('input/map/camera_tilt/axis')
+        tilt_button_p = self.settings.value('input/map/camera_tilt/button_p')
+        tilt_button_n = self.settings.value('input/map/camera_tilt/button_n')
+        tilt_button_speed = self.settings.value('input/map/camera_tilt/button_speed')
+        tilt_expo = self.settings.value('input/map/camera_tilt/expo')
+        tilt_invert = self.settings.value('input/map/camera_tilt/invert') == 'true'
 
 
         # left_drive setting widgets
@@ -238,51 +250,120 @@ class InputDialog(QtGui.QDialog):
         # camera_pan setting widgets
         map_layout.addWidget(QtGui.QLabel('Camera Pan:', self), 6, 0,
                              QtCore.Qt.AlignmentFlag.AlignRight)
+        # controller entry
         self.pan_control = QtGui.QComboBox(self)
         self.pan_control.addItems(self.controllers)
         if pan_control_index is not None:
             self.pan_control.setCurrentIndex(pan_control_index)
         map_layout.addWidget(self.pan_control, 6, 1)
+        # axis entry
         self.pan_axis = QtGui.QComboBox(self)
         self.pan_axis.addItems(self.axes)
         if pan_axis_index is not None:
             self.pan_axis.setCurrentIndex(pan_axis_index)
         map_layout.addWidget(self.pan_axis, 6, 2)
+        # expo entry
         self.pan_expo = QtGui.QLineEdit(self)
         if pan_expo is not None:
             self.pan_expo.setText(str(pan_expo))
         map_layout.addWidget(self.pan_expo, 6, 3)
+        # invert controls check box
         self.pan_invert = QtGui.QCheckBox(self)
         if pan_invert is not None:
             self.pan_invert.setChecked(pan_invert)
         map_layout.addWidget(self.pan_invert, 6, 4)
+        # use axis/buttons checkbox
         self.pan_use_axis = QtGui.QCheckBox(self)
         if pan_use_axis is not None:
             self.pan_use_axis.setChecked(pan_use_axis)
         self.pan_use_axis.setToolTip("Check to use buttons instead of an axis")
+        map_layout.addWidget(self.pan_use_axis, 6, 5)
 
+        # positive and negative button boxes
         pan_buttons_layout = QtGui.QGridLayout()
 
+        # positive button entry
         pan_buttons_layout.addWidget(QtGui.QLabel('Positive', self), 0, 0)
         self.pan_button_p = QtGui.QLineEdit(self)
         if pan_button_p is not None:
             self.pan_button_p.setText(str(pan_button_p))
         pan_buttons_layout.addWidget(self.pan_button_p, 0, 1)
 
+        # negative button entry
         pan_buttons_layout.addWidget(QtGui.QLabel('Negative', self), 1, 0)
         self.pan_button_n = QtGui.QLineEdit(self)
         if pan_button_n is not None:
             self.pan_button_n.setText(str(pan_button_n))
         pan_buttons_layout.addWidget(self.pan_button_n, 1, 1)
 
+        # add positive and negative button entries to main grid layout
         map_layout.addLayout(pan_buttons_layout, 6, 6)
 
+        # button speed entry
         self.pan_button_speed = QtGui.QLineEdit(self)
         if pan_button_speed is not None:
             self.pan_button_speed.setText(str(pan_button_speed))
-
-        # Fatal Python error: (pygame parachute) Segmentation Fault
         map_layout.addWidget(self.pan_button_speed, 6, 7)
+
+        #############################
+        # camera_tilt setting widgets
+        #############################
+        map_layout.addWidget(QtGui.QLabel('Camera Tilt:', self), 7, 0,
+                             QtCore.Qt.AlignmentFlag.AlignRight)
+        # controller entry
+        self.tilt_control = QtGui.QComboBox(self)
+        self.tilt_control.addItems(self.controllers)
+        if tilt_control_index is not None:
+            self.tilt_control.setCurrentIndex(tilt_control_index)
+        map_layout.addWidget(self.tilt_control, 7, 1)
+        # axis entry
+        self.tilt_axis = QtGui.QComboBox(self)
+        self.tilt_axis.addItems(self.axes)
+        if tilt_axis_index is not None:
+            self.tilt_axis.setCurrentIndex(tilt_axis_index)
+        map_layout.addWidget(self.tilt_axis, 7, 2)
+        # expo entry
+        self.tilt_expo = QtGui.QLineEdit(self)
+        if tilt_expo is not None:
+            self.tilt_expo.setText(str(tilt_expo))
+        map_layout.addWidget(self.tilt_expo, 7, 3)
+        # invert controls check box
+        self.tilt_invert = QtGui.QCheckBox(self)
+        if tilt_invert is not None:
+            self.tilt_invert.setChecked(tilt_invert)
+        map_layout.addWidget(self.tilt_invert, 7, 4)
+        # use axis/buttons checkbox
+        self.tilt_use_axis = QtGui.QCheckBox(self)
+        if tilt_use_axis is not None:
+            self.tilt_use_axis.setChecked(tilt_use_axis)
+        self.tilt_use_axis.setToolTip("Check to use buttons instead of an axis")
+        map_layout.addWidget(self.tilt_use_axis, 7, 5)
+
+        # positive and negative button boxes
+        tilt_buttons_layout = QtGui.QGridLayout()
+
+        # positive button entry
+        tilt_buttons_layout.addWidget(QtGui.QLabel('Positive', self), 0, 0)
+        self.tilt_button_p = QtGui.QLineEdit(self)
+        if tilt_button_p is not None:
+            self.tilt_button_p.setText(str(tilt_button_p))
+        tilt_buttons_layout.addWidget(self.tilt_button_p, 0, 1)
+
+        # negative button entry
+        tilt_buttons_layout.addWidget(QtGui.QLabel('Negative', self), 1, 0)
+        self.tilt_button_n = QtGui.QLineEdit(self)
+        if tilt_button_n is not None:
+            self.tilt_button_n.setText(str(tilt_button_n))
+        tilt_buttons_layout.addWidget(self.tilt_button_n, 1, 1)
+
+        # add positive and negative button entries to main grid layout
+        map_layout.addLayout(tilt_buttons_layout, 7, 6)
+
+        # button speed entry
+        self.tilt_button_speed = QtGui.QLineEdit(self)
+        if tilt_button_speed is not None:
+            self.tilt_button_speed.setText(str(tilt_button_speed))
+        map_layout.addWidget(self.tilt_button_speed, 7, 7)
 
 
 
@@ -301,6 +382,8 @@ class InputDialog(QtGui.QDialog):
         ok_button.setDefault(True)
         ok_button.clicked.connect(self.ok_action)
         buttons.addWidget(ok_button)
+
+
 
     def get_joystick_list(self):
         """Get a list of connected joysticks.
@@ -386,7 +469,7 @@ class InputDialog(QtGui.QDialog):
         pan_control_index = self.pan_control.currentIndex()
         self.settings.setValue('input/map/camera_pan/control', pan_control_index)
         pan_use_axis = self.pan_use_axis.isChecked()
-        self.settins.setValue('input/map/camera_pan/use_axis', pan_use_axis)
+        self.settings.setValue('input/map/camera_pan/use_axis', pan_use_axis)
         pan_axis_index = self.pan_axis.currentIndex()
         self.settings.setValue('input/map/camera_pan/axis', pan_axis_index)
         pan_button_p = int(self.pan_button_p.text())
@@ -400,7 +483,23 @@ class InputDialog(QtGui.QDialog):
         pan_invert = self.pan_invert.isChecked()
         self.settings.setValue('input/map/camera_pan/invert', pan_invert)
 
-
+        # Save camera_tilt settings
+        tilt_control_index = self.tilt_control.currentIndex()
+        self.settings.setValue('input/map/camera_tilt/control', tilt_control_index)
+        tilt_use_axis = self.tilt_use_axis.isChecked()
+        self.settings.setValue('input/map/camera_tilt/use_axis', tilt_use_axis)
+        tilt_axis_index = self.tilt_axis.currentIndex()
+        self.settings.setValue('input/map/camera_tilt/axis', tilt_axis_index)
+        tilt_button_p = int(self.tilt_button_p.text())
+        self.settings.setValue('input/map/camera_tilt/button_p', tilt_button_p)
+        tilt_button_n = int(self.tilt_button_n.text())
+        self.settings.setValue('input/map/camera_tilt/button_n', tilt_button_n)
+        tilt_button_speed = float(self.tilt_button_speed.text())
+        self.settings.setValue('input/map/camera_tilt/button_speed', tilt_button_speed)
+        tilt_expo = float(self.tilt_expo.text())
+        self.settings.setValue('input/map/camera_tilt/expo', tilt_expo)
+        tilt_invert = self.tilt_invert.isChecked()
+        self.settings.setValue('input/map/camera_tilt/invert', tilt_invert)
 
         # Notify the input controller
         QtGui.QApplication.instance().input_controller.configure()
