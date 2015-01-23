@@ -26,9 +26,9 @@ def main():
     app.port_controller = PortController(app.command_controller, app)
 
     # Create main window
-    window = ApplicationWindow()
+    app.window = ApplicationWindow()
     # Causes window to start windowed
-    window.showNormal()
+    app.window.showNormal()
     sys.exit(app.exec_())
 
 if __name__ == '__main__':

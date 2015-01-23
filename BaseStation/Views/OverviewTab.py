@@ -38,16 +38,16 @@ class OverviewTab(QtGui.QWidget):
         info_layout.addLayout(left_layout)
 
         # Camera info frame
-        camera_frame = CameraFrame(info_frame)
-        left_layout.addWidget(camera_frame)
+        self.camera_frame = CameraFrame(info_frame)
+        left_layout.addWidget(self.camera_frame)
 
         # Propulsion info frame
-        propulsion_frame = PropulsionFrame(info_frame)
-        left_layout.addWidget(propulsion_frame)
+        self.propulsion_frame = PropulsionFrame(info_frame)
+        left_layout.addWidget(self.propulsion_frame)
 
         # Arm info frame
-        arm_frame = ArmFrame(info_frame)
-        info_layout.addWidget(arm_frame)
+        self.arm_frame = ArmFrame(info_frame)
+        info_layout.addWidget(self.arm_frame)
 
         # Create a frame for the map info
         map_frame = QtGui.QFrame(self)

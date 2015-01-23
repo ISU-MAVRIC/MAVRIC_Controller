@@ -6,8 +6,6 @@ from ArmController import *
 from DriveController import *
 from CameraController import *
 
-from Views.CameraFrame import *
-
 class CommandController(QtCore.QObject):
     """A class to encode and decode commands."""
 
@@ -48,6 +46,16 @@ class CommandController(QtCore.QObject):
         )
         self.parent().port_controller.write(drive_cmd)
 
+        self.parent().window.overview_tab.propulsion_frame.left_speed_bar.setValue(drive[0])
+        self.parent().window.overview_tab.propulsion_frame.m1_speed_bar.setValue(drive[0])
+        self.parent().window.overview_tab.propulsion_frame.m2_speed_bar.setValue(drive[1])
+        self.parent().window.overview_tab.propulsion_frame.m3_speed_bar.setValue(drive[2])
+
+        self.parent().window.overview_tab.propulsion_frame.right_speed_bar.setValue(drive[3])
+        self.parent().window.overview_tab.propulsion_frame.m4_speed_bar.setValue(drive[3])
+        self.parent().window.overview_tab.propulsion_frame.m5_speed_bar.setValue(drive[4])
+        self.parent().window.overview_tab.propulsion_frame.m6_speed_bar.setValue(drive[5])
+
     def arm_speed_command(self, azimuth, shoulder, elevation):
         """Send an arm speed command to the rover.
 
@@ -67,6 +75,8 @@ class CommandController(QtCore.QObject):
         )
         self.parent().port_controller.write(arm_cmd)
 
+
+
     def camera_pos_command(self, pan, tilt):
         """ Write Comment """
         p, t = self.camera_control.compute(pan, tilt)
@@ -80,7 +90,10 @@ class CommandController(QtCore.QObject):
         )
         self.parent().port_controller.write(camera_cmd)
 
-
+        self.parent().window.overview_tab.camera_frame.pan_bar.setValue(p)
+        self.parent().window.overview_tab.camera_frame.pan_field.setText(str(p))
+        self.parent().window.overview_tab.camera_frame.tilt_bar.setValue(t)
+        self.parent().window.overview_tab.camera_frame.tilt_field.setText(str(t))
 
     def parse(self, byte):
         """Decode an incoming byte."""

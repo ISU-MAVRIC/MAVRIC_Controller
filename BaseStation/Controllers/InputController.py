@@ -187,7 +187,7 @@ class InputController(QtCore.QObject):
         elbow_out = self.expo(elbow_raw, self.arm_elbow['expo'])
         if self.arm_elbow['invert']: elbow_out = -1.0 * elbow_out
 
-        # self.controller.arm_speed_command(azimuth_out, shoulder_out, elbow_out)
+        self.controller.arm_speed_command(azimuth_out, shoulder_out, elbow_out)
 
         """CAMERA PAN"""
         if self.camera_pan['control'] == 0:
@@ -225,7 +225,6 @@ class InputController(QtCore.QObject):
                        camera_tilt_stick.get_button(self.camera_tilt['button_n'] - 1)
             tilt_out = tilt_raw * self.camera_tilt['button_speed']
 
-        print "Pan Out: {} Tilt Out: {}".format(pan_out, tilt_out)
         self.controller.camera_pos_command(pan_out, tilt_out)
 
 
