@@ -260,28 +260,30 @@ class InputDialog(QtGui.QDialog):
         if pan_use_axis is not None:
             self.pan_use_axis.setChecked(pan_use_axis)
         self.pan_use_axis.setToolTip("Check to use buttons instead of an axis")
-        map_layout.addWidget(self.pan_use_axis, 6, 5)
 
-        self.pan_buttons_layout = QtGui.QGridLayout(self)
+        pan_buttons_layout = QtGui.QGridLayout()
 
-        self.pan_buttons_layout.addWidget(QtGui.QLabel('Positive', self), 0, 0)
+        pan_buttons_layout.addWidget(QtGui.QLabel('Positive', self), 0, 0)
         self.pan_button_p = QtGui.QLineEdit(self)
         if pan_button_p is not None:
             self.pan_button_p.setText(str(pan_button_p))
-        self.pan_buttons_layout.addWidget(self.pan_button_p, 0, 1)
+        pan_buttons_layout.addWidget(self.pan_button_p, 0, 1)
 
-        self.pan_buttons_layout.addWidget(QtGui.QLabel('Negative', self), 1, 0)
+        pan_buttons_layout.addWidget(QtGui.QLabel('Negative', self), 1, 0)
         self.pan_button_n = QtGui.QLineEdit(self)
         if pan_button_n is not None:
             self.pan_button_n.setText(str(pan_button_n))
-        self.pan_buttons_layout.addWidget(self.pan_button_n, 1, 1)
+        pan_buttons_layout.addWidget(self.pan_button_n, 1, 1)
 
-        map_layout.addLayout(self.pan_buttons_layout, 6, 6)
+        map_layout.addLayout(pan_buttons_layout, 6, 6)
 
         self.pan_button_speed = QtGui.QLineEdit(self)
         if pan_button_speed is not None:
             self.pan_button_speed.setText(str(pan_button_speed))
-        map_layout.addWidget(pan_button_speed, 6, 7)
+
+        # Fatal Python error: (pygame parachute) Segmentation Fault
+        map_layout.addWidget(self.pan_button_speed, 6, 7)
+
 
 
 

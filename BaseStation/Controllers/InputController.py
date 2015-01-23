@@ -64,7 +64,10 @@ class InputController(QtCore.QObject):
         expo: exponential response for axis control
         invert: true if forward on axis should equal negative value
         """
+
+        """Resets all expo values if one of them is unset/invalid"""
         try:
+            # left_drive chosen for no particular reason. Change this to check all vals later
             float(self.settings.value('input/map/left_drive/expo'))
         except TypeError:
             self.settings.setValue('input/map/left_drive/expo', 1.5)

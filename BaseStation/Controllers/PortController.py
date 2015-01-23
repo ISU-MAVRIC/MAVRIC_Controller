@@ -53,6 +53,7 @@ class PortController(QtCore.QObject):
         port_name = self.settings.value("comm/port")
         port_baud = self.settings.value("comm/baud")
 
+        """Resets baudrate to 57600 if value is invalid/missing"""
         try:
             int(port_baud)
         except TypeError:
