@@ -49,8 +49,16 @@ class PortController(QtCore.QObject):
 
     def configure(self):
         """Load the configuration from the application settings object."""
+
         port_name = self.settings.value("comm/port")
         port_baud = self.settings.value("comm/baud")
+
+        try:
+            int(port_baud)
+        except TypeError:
+            self.settings.setValue("comm/baud", 57600)
+            port_baud = self.settings.value("comm/baud")
+            print "Invalid Baudrate: Resetting to 57600"
 
         self.port.port = port_name
         self.port.baudrate = port_baud

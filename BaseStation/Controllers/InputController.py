@@ -64,6 +64,16 @@ class InputController(QtCore.QObject):
         expo: exponential response for axis control
         invert: true if forward on axis should equal negative value
         """
+        try:
+            float(self.settings.value('input/map/left_drive/expo'))
+        except TypeError:
+            self.settings.setValue('input/map/left_drive/expo', 1.5)
+            self.settings.setValue('input/map/right_drive/expo', 1.5)
+            self.settings.setValue('input/map/arm_azimuth/expo', 1.5)
+            self.settings.setValue('input/map/arm_shoulder/expo', 1.5)
+            self.settings.setValue('input/map/arm_elbow/expo', 1.5)
+            self.settings.setValue('input/map/camera_pan/expo', 1.5)
+            self.settings.setValue('input/map/camera_tilt/expo', 1.5)
 
         self.left_drive = {
             'control': self.settings.value('input/map/left_drive/control'),
