@@ -7,7 +7,7 @@ from PySide import QtCore
 class InputController(QtCore.QObject):
     """A class to interface with the joysticks."""
 
-    def __init__(self, controller, parent):
+    def __init__(self, controller, model, parent):
         """Construct and initialize a InputController.
 
         Args:
@@ -17,6 +17,7 @@ class InputController(QtCore.QObject):
         """
         super(InputController, self).__init__(parent)
         self.controller = controller
+        self.model = model
 
         self.settings = QtCore.QSettings()
         self.primary = None
@@ -207,6 +208,8 @@ class InputController(QtCore.QObject):
                       camera_pan_stick.get_button(self.camera_pan['button_n'] - 1)
             pan_out = pan_raw * self.camera_pan['button_speed']
 
+        self.model.cam_pan_in = pan_out
+
         """CAMERA TILT"""
         if self.camera_tilt['control'] == 0:
             camera_tilt_stick = self.primary
@@ -225,7 +228,7 @@ class InputController(QtCore.QObject):
                        camera_tilt_stick.get_button(self.camera_tilt['button_n'] - 1)
             tilt_out = tilt_raw * self.camera_tilt['button_speed']
 
-        self.controller.camera_pos_command(pan_out, tilt_out)
+        self.model.cam_tilt_in = tilt_out
 
 
     @staticmethod

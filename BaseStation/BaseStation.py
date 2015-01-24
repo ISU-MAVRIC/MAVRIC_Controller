@@ -8,6 +8,9 @@ from Controllers.InputController import *
 from Controllers.PortController import *
 from Views.ApplicationWindow import *
 
+from Models.InputModel import *
+from Models.CameraModel import *
+
 
 def main():
     # Initialize frameworks
@@ -20,9 +23,13 @@ def main():
     settings = QtCore.QSettings()
     app.setStyle('plastique')
 
+    input_model = InputModel()
+    camera_model = CameraModel()
+
     # Setup application objects
     app.command_controller = CommandController(app)
-    app.input_controller = InputController(app.command_controller, app)
+    app.input_controller = InputController(app.command_controller, input_model, app)
+    app.camera_controller = CameraController(input_model, camera_model, app)
     app.port_controller = PortController(app.command_controller, app)
 
     # Create main window

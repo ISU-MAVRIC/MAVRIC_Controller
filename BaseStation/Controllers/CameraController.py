@@ -1,18 +1,8 @@
 from PySide import QtCore
 
-
 class CameraController(QtCore.QObject):
-    """A class to abstract controlling the arm."""
 
-    # These should eventually be synced to the packet rate with
-    # the speed of the servos in mind.
-    pan_speed = 5
-    tilt_speed = 5
-
-    pan_pos = 127
-    tilt_pos = 127
-
-    def __init__(self, parent=None):
+    def __init__(self, input_model, camera_model, parent):
         """Construct and initialize a CameraController.
 
         Args:
@@ -20,7 +10,10 @@ class CameraController(QtCore.QObject):
         """
         super(CameraController, self).__init__(parent)
 
-    def compute(self, pan, tilt):
+        self.input_model = input_model
+        self.camera_model = camera_model
+
+    def _update(self):
         """Compute the position values to send to the rover
 
         Args:
@@ -31,13 +24,18 @@ class CameraController(QtCore.QObject):
             Pan output  int [0,255].
             Tilt output int [0,255].
         """
-        self.pan_pos += int(pan * self.pan_speed)
-        # Camera motors are servos, sending a setpoint, not a speed
-        self.pan_pos = clamp(self.pan_pos, 0, 255)
-        self.tilt_pos += int(tilt * self.tilt_speed)
-        self.tilt_pos = clamp(self.tilt_pos, 0, 255)
 
-        return self.pan_pos, self.tilt_pos
+        self.camera_model.pan_pos += int(self.input_model.pan_in * self.pan_speed)
+        self.camera_model.pan_pos = clamp(self.pan_pos, 0, 255)
+        self.camera_model.tilt_pos += int(self.input_model.tilt_in * self.tilt_speed)
+        self.camera_model.tilt_pos = clamp(self.tilt_pos, 0, 255)
+
+        # should be somewhere else, here for the POC
+
+        print "<cc {:03d} {:03d} >".format(
+            self.camera_model.pan_pos,
+            self.camera_model.tilt_pos
+        )
 
 
 def clamp(n, minn, maxn):

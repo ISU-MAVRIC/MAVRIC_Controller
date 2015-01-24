@@ -19,7 +19,7 @@ class CommandController(QtCore.QObject):
 
         self.drive_control = DriveController(self)
         self.arm_control = ArmController(self)
-        self.camera_control = CameraController(self)
+        # self.camera_control = CameraController(self)
 
         self.state = "none"
         self.buffer = bytearray()
@@ -33,12 +33,12 @@ class CommandController(QtCore.QObject):
         """
         drive, angle = self.drive_control.compute(left, right)
 
-        print "<cm {0:03d} {1:03d} {2:03d} {3:03d} {4:03d} {5:03d} >".format(
-            drive[0], drive[1], drive[2], drive[3], drive[4], drive[5]
-        )
-        print "<cs {0:03d} {1:03d} {2:03d} {3:03d} {4:03d} {5:03d} >".format(
-            angle[0], angle[1], angle[2], angle[3], angle[4], angle[5]
-        )
+        # print "<cm {0:03d} {1:03d} {2:03d} {3:03d} {4:03d} {5:03d} >".format(
+        #     drive[0], drive[1], drive[2], drive[3], drive[4], drive[5]
+        # )
+        # print "<cs {0:03d} {1:03d} {2:03d} {3:03d} {4:03d} {5:03d} >".format(
+        #     angle[0], angle[1], angle[2], angle[3], angle[4], angle[5]
+        # )
 
         drive_cmd = "<cm{:s}{:s}{:s}{:s}{:s}{:s}>".format(
             chr(drive[0]), chr(drive[1]), chr(drive[2]),
@@ -66,9 +66,9 @@ class CommandController(QtCore.QObject):
         """
         a, s, e = self.arm_control.compute_speed(azimuth, shoulder, elevation)
 
-        print "<ca {:03d} {:03d} {:03d} >".format(
-            a, s, e
-        )
+        # print "<ca {:03d} {:03d} {:03d} >".format(
+        #     a, s, e
+        # )
 
         arm_cmd = "<ca{:s}{:s}{:s}>\n".format(
             chr(a), chr(s), chr(e)
@@ -81,9 +81,9 @@ class CommandController(QtCore.QObject):
         """ Write Comment """
         p, t = self.camera_control.compute(pan, tilt)
 
-        print "<cc {:03d} {:03d} >".format(
-            p, t
-        )
+        # print "<cc {:03d} {:03d} >".format(
+        #     p, t
+        # )
 
         camera_cmd = "<cc{:s}{:s}X>".format(
             chr(p), chr(t)
