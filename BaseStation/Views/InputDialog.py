@@ -89,31 +89,31 @@ class InputDialog(QtGui.QDialog):
         # Get saved left_drive settings
         left_control_index = self.settings.value('input/map/left_drive/control')
         left_axis_index = self.settings.value('input/map/left_drive/axis')
-        left_expo = self.settings.value('input/map/left_drive/expo')
+        left_expo = self.settings.value('input/map/left_drive/expo', 1.5)
         left_invert = self.settings.value('input/map/left_drive/invert') == 'true'
 
         # Get saved right_drive settings
         right_control_index = self.settings.value('input/map/right_drive/control')
         right_axis_index = self.settings.value('input/map/right_drive/axis')
-        right_expo = self.settings.value('input/map/right_drive/expo')
+        right_expo = self.settings.value('input/map/right_drive/expo', 1.5)
         right_invert = self.settings.value('input/map/right_drive/invert') == 'true'
 
         # Get saved arm_azimuth settings
         azimuth_control_index = self.settings.value('input/map/arm_azimuth/control')
         azimuth_axis_index = self.settings.value('input/map/arm_azimuth/axis')
-        azimuth_expo = self.settings.value('input/map/arm_azimuth/expo')
+        azimuth_expo = self.settings.value('input/map/arm_azimuth/expo', 1.5)
         azimuth_invert = self.settings.value('input/map/arm_azimuth/invert') == 'true'
 
         # Get saved arm_shoulder settings
         shoulder_control_index = self.settings.value('input/map/arm_shoulder/control')
         shoulder_axis_index = self.settings.value('input/map/arm_shoulder/axis')
-        shoulder_expo = self.settings.value('input/map/arm_shoulder/expo')
+        shoulder_expo = self.settings.value('input/map/arm_shoulder/expo', 1.5)
         shoulder_invert = self.settings.value('input/map/arm_shoulder/invert') == 'true'
 
         # Get saved arm_elbow settings
         elbow_control_index = self.settings.value('input/map/arm_elbow/control')
         elbow_axis_index = self.settings.value('input/map/arm_elbow/axis')
-        elbow_expo = self.settings.value('input/map/arm_elbow/expo')
+        elbow_expo = self.settings.value('input/map/arm_elbow/expo', 1.5)
         elbow_invert = self.settings.value('input/map/arm_elbow/invert') == 'true'
 
         # Get saved camera_pan settings
@@ -122,8 +122,8 @@ class InputDialog(QtGui.QDialog):
         pan_axis_index = self.settings.value('input/map/camera_pan/axis')
         pan_button_p = self.settings.value('input/map/camera_pan/button_p')
         pan_button_n = self.settings.value('input/map/camera_pan/button_n')
-        pan_button_speed = self.settings.value('input/map/camera_pan/button_speed')
-        pan_expo = self.settings.value('input/map/camera_pan/expo')
+        pan_button_speed = self.settings.value('input/map/camera_pan/button_speed', 0.1)
+        pan_expo = self.settings.value('input/map/camera_pan/expo', 1.5)
         pan_invert = self.settings.value('input/map/camera_pan/invert') == 'true'
 
         # Get saved camera_tilt settings
@@ -132,8 +132,8 @@ class InputDialog(QtGui.QDialog):
         tilt_axis_index = self.settings.value('input/map/camera_tilt/axis')
         tilt_button_p = self.settings.value('input/map/camera_tilt/button_p')
         tilt_button_n = self.settings.value('input/map/camera_tilt/button_n')
-        tilt_button_speed = self.settings.value('input/map/camera_tilt/button_speed')
-        tilt_expo = self.settings.value('input/map/camera_tilt/expo')
+        tilt_button_speed = self.settings.value('input/map/camera_tilt/button_speed', 0.1)
+        tilt_expo = self.settings.value('input/map/camera_tilt/expo', 1.5)
         tilt_invert = self.settings.value('input/map/camera_tilt/invert') == 'true'
 
 

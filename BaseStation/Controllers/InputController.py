@@ -65,51 +65,38 @@ class InputController(QtCore.QObject):
         invert: true if forward on axis should equal negative value
         """
 
-        """Resets all expo values if one of them is unset/invalid"""
-        try:
-            # left_drive chosen for no particular reason. Change this to check all vals later
-            float(self.settings.value('input/map/left_drive/expo'))
-        except TypeError:
-            self.settings.setValue('input/map/left_drive/expo', 1.5)
-            self.settings.setValue('input/map/right_drive/expo', 1.5)
-            self.settings.setValue('input/map/arm_azimuth/expo', 1.5)
-            self.settings.setValue('input/map/arm_shoulder/expo', 1.5)
-            self.settings.setValue('input/map/arm_elbow/expo', 1.5)
-            self.settings.setValue('input/map/camera_pan/expo', 1.5)
-            self.settings.setValue('input/map/camera_tilt/expo', 1.5)
-
         self.left_drive = {
             'control': self.settings.value('input/map/left_drive/control'),
             'axis': self.settings.value('input/map/left_drive/axis'),
-            'expo': float(self.settings.value('input/map/left_drive/expo')),
+            'expo': float(self.settings.value('input/map/left_drive/expo', 1.5)),
             'invert': self.settings.value('input/map/left_drive/invert') == 'true'
         }
 
         self.right_drive = {
             'control': self.settings.value('input/map/right_drive/control'),
             'axis': self.settings.value('input/map/right_drive/axis'),
-            'expo': float(self.settings.value('input/map/right_drive/expo')),
+            'expo': float(self.settings.value('input/map/right_drive/expo', 1.5)),
             'invert': self.settings.value('input/map/right_drive/invert') == 'true'
         }
 
         self.arm_azimuth = {
             'control': self.settings.value('input/map/arm_azimuth/control'),
             'axis': self.settings.value('input/map/arm_azimuth/axis'),
-            'expo': float(self.settings.value('input/map/arm_azimuth/expo')),
+            'expo': float(self.settings.value('input/map/arm_azimuth/expo', 1.5)),
             'invert': self.settings.value('input/map/arm_azimuth/invert') == 'true'
         }
 
         self.arm_shoulder = {
             'control': self.settings.value('input/map/arm_shoulder/control'),
             'axis': self.settings.value('input/map/arm_shoulder/axis'),
-            'expo': float(self.settings.value('input/map/arm_shoulder/expo')),
+            'expo': float(self.settings.value('input/map/arm_shoulder/expo', 1.5)),
             'invert': self.settings.value('input/map/arm_shoulder/invert') == 'true'
         }
 
         self.arm_elbow = {
             'control': self.settings.value('input/map/arm_elbow/control'),
             'axis': self.settings.value('input/map/arm_elbow/axis'),
-            'expo': float(self.settings.value('input/map/arm_elbow/expo')),
+            'expo': float(self.settings.value('input/map/arm_elbow/expo', 1.5)),
             'invert': self.settings.value('input/map/arm_elbow/invert') == 'true'
         }
 
@@ -120,8 +107,8 @@ class InputController(QtCore.QObject):
             'axis': self.settings.value('input/map/camera_pan/axis'),
             'button_p': self.settings.value('input/map/camera_pan/button_p'),
             'button_n': self.settings.value('input/map/camera_pan/button_n'),
-            'button_speed': float(self.settings.value('input/map/camera_pan/button_speed')),
-            'expo': float(self.settings.value('input/map/camera_pan/expo')),
+            'button_speed': float(self.settings.value('input/map/camera_pan/button_speed', 0.1)),
+            'expo': float(self.settings.value('input/map/camera_pan/expo', 1.5)),
             'invert': self.settings.value('input/map/camera_pan/invert') == 'true'
         }
 
@@ -131,8 +118,8 @@ class InputController(QtCore.QObject):
             'axis': self.settings.value('input/map/camera_tilt/axis'),
             'button_p': self.settings.value('input/map/camera_tilt/button_p'),
             'button_n': self.settings.value('input/map/camera_tilt/button_n'),
-            'button_speed': float(self.settings.value('input/map/camera_tilt/button_speed')),
-            'expo': float(self.settings.value('input/map/camera_tilt/expo')),
+            'button_speed': float(self.settings.value('input/map/camera_tilt/button_speed', 0.1)),
+            'expo': float(self.settings.value('input/map/camera_tilt/expo', 1.5)),
             'invert': self.settings.value('input/map/camera_tilt/invert') == 'true'
         }
 
